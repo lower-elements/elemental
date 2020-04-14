@@ -1,0 +1,12 @@
+{{- define "main" }}
+<article>
+  <header>
+    <h1>{{ .Title }}</h1>
+    <small role="contentinfo" class="text-muted"
+      >Published on {{ .Date }} {{- with .Param "author" }} by
+      <strong>{{ . }}</strong> {{- end -}}
+    </small>
+  </header>
+  {{ .Content }}
+</article>
+{{ end -}}
