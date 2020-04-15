@@ -2,11 +2,13 @@
 <article>
   <header>
     <h1>{{ .Title }}</h1>
-    <small role="contentinfo" class="text-muted"
-      >Published on {{ .Date.Format "2006-01-02" }} {{- with .Param "author" }}
-      by <strong>{{ . }}</strong> {{- end -}}
+    <small role="contentinfo" class="text-muted">Published on {{ .Date.Format "2006-01-02" }}
+      {{- with .Param "author" }}
+      by <strong>{{ . }}</strong> {{- end -}} {{ with .Lastmod }} <br />Edited
+      on {{ .Format "2006-01-02" }} {{ with $.Param "editor" }} by <strong>{{ . }}</strong> {{ else }} {{  with $.Param "author" }} by <strong>{{ . }}</strong> {{ end }} {{ end }} {{ end }}
     </small>
   </header>
+  <hr />
   {{ .Content }}
 </article>
 {{ end -}}
