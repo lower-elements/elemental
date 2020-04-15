@@ -1,0 +1,11 @@
+{{- define "main" }}
+<h1>{{ .Title }}</h1>
+{{ .Content }}
+<hr />
+{{ with .Pages }}
+<div class="card-deck">
+  {{ range . }} {{ partial "post-card.html" . }} {{ end }}
+</div>
+{{ else }}
+<p>No posts were found in this section.</p>
+{{ end }} {{ end -}}
