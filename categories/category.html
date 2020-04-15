@@ -17,5 +17,8 @@
   {{ end }}
 </div>
 {{ else }}
-<p>No posts were found in this category.</p>
+<p>
+  {{- with .Param "noContent" }} {{- . | html -}} {{- else -}} No posts were
+  found in this category. {{ end -}}
+</p>
 {{ end -}} {{ end -}}
