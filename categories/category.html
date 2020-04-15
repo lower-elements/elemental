@@ -1,0 +1,21 @@
+{{- define "main" }}
+<h1>{{ .Title }}</h1>
+{{ .Content }}
+<hr />
+{{ with .Pages }}
+<div class="row">
+  {{ range .GroupBy "Section" }}
+  <div class="col-sm">
+    <a href="/{{ .Key }}">
+      {{ with $.Site.GetPage "section" .Key }}
+      <h2>{{.Title}}</h2>
+      {{ else }}
+      <h2>{{ .Key | title }}</h2>
+      {{ end }} {{ range .Pages }} {{ partial "post-card.html" . }} {{ end }}
+    </a>
+  </div>
+  {{ end }}
+</div>
+{{ else }}
+<p>No posts were found in this category.</p>
+{{ end -}} {{ end -}}
