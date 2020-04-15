@@ -3,8 +3,8 @@
   <header>
     <h1>{{ .Title }}</h1>
     <small role="contentinfo" class="text-muted"
-      >Published on {{ .Date }} {{- with .Param "author" }} by
-      <strong>{{ . }}</strong> {{- end -}}
+      >Published on {{ .Date.Format "2006-01-02" }} {{- with .Param "author" }}
+      by <strong>{{ . }}</strong> {{- end -}}
     </small>
   </header>
   {{ .Content }}
