@@ -3,7 +3,7 @@
 {{ .Content }}
 <hr />
 {{ with .Pages }}
-<div class="row">
+<section class="row" aria-label="Articles in This Category">
   {{ range .GroupBy "Section" }}
   <div class="col-sm">
     <a href="/{{ .Key }}">
@@ -15,7 +15,7 @@
     </a>
   </div>
   {{ end }}
-</div>
+</section>
 {{ else }}
 <p>
   {{- with .Param "noContent" }} {{- . | html -}} {{- else -}} No posts were

@@ -3,9 +3,9 @@
 {{ .Content }}
 <hr />
 {{ with .Pages }}
-<div class="card-deck">
-  {{ range . }} {{ partial "post-card.html" . }} {{ end }}
-</div>
+<section class="card-deck" aria-label="Articles in This Section">
+  > {{ range . }} {{ partial "post-card.html" . }} {{ end }}
+</section>
 {{ else }}
 <p>No posts were found in this section.</p>
 {{ end }} {{ end -}}
