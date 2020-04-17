@@ -1,0 +1,67 @@
+<aside class="col-lg-4" aria-label="Post Sidebar">
+  <div id="sidebar-tabview"></div>
+  <div id="info-tab-panel">
+    <h3 aria-level="2">Post Information</h1>
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <th scope="row">Date Published:</th>
+            <td>{{ .Date }}</td>
+          </tr>
+          {{ with .Param "author" }}
+          <tr>
+            <th scope="row">Author:</th>
+            <td>{{ . }}</td>
+          </tr>
+          {{ end }} {{ if .Lastmod }}
+          <tr>
+            <th scope="row">Date Edited:</th>
+            <td>{{ .Lastmod }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Editor:</th>
+            <td>
+              {{ if isset .Params "editor" }} {{ .Param "editor" }} {{ else if isset .Params "author" }}
+              {{ .Param "author" }} {{ else }} Anonymous {{ end }}
+            </td>
+          </tr>
+          {{ end }}
+        </tbody>
+      </table>
+  </div>
+  <div id="toc-tab-panel">
+    <h3 aria-level="2">Table of Contents</h3>
+    {{ .TableOfContents }}
+  </div>
+  <div id="comments-tab-panel">
+    {{ template "_internal/disqus.html" . }}
+  </div>
+
+  <script type="text/javascript" src="/dynamitab/lib/dynamitab.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      // Create the tabview
+      var tv = new TabView('sidebar-tv', {
+        panel_heading_level: 0,
+        use_bootstrap: true,
+        expand_tabs: true,
+      });
+      // create some tabs.
+      tv.createTab(
+        'Info',
+        'Post Information',
+        document.querySelector('#info-tab-panel'),
+      );
+      tv.createTab("Contents", 'Table of Contents', document.querySelector('#toc-tab-panel'));
+      tv.createTab(
+        'Comments',
+        '',
+        document.querySelector('#comments-tab-panel'),
+      );
+      // add the TabView to its container div in the sidebar.
+      document.querySelector('#sidebar-tabview').appendChild(tv.tabview);
+      // Register the tabview's events (should be called after the document has loaded).
+      tv.registerEvents();
+    });
+  </script>
+</aside>
