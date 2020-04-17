@@ -4,7 +4,7 @@
 <hr />
 {{ with .Pages }}
 <section class="card-deck" aria-label="Articles in This Section">
-  > {{ range . }} {{ partial "post-card.html" . }} {{ end }}
+  {{ range . }} {{ partial "post-card.html" . }} {{ end }}
 </section>
 {{ else }}
 <p>No posts were found in this section.</p>
