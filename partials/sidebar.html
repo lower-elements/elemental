@@ -13,7 +13,7 @@
             <th scope="row">Author:</th>
             <td>{{ . }}</td>
           </tr>
-          {{ end }} {{ if .Lastmod }}
+          {{ end }} {{ if not (eq .Lastmod .Date) }}
           <tr>
             <th scope="row">Date Edited:</th>
             <td>{{ .Lastmod.Format "2006-01-02" }}</td>
