@@ -11,7 +11,9 @@
       <h2>{{.Title}}</h2>
       {{ else }}
       <h2>{{ .Key | title }}</h2>
-      {{ end }} {{ range .Pages }} {{ partial "post-card.html" . }} {{ end }}
+      {{ end }} 
+    </a>
+      {{ range .Pages }} {{ partial "post-card.html" . }} {{ end }}
     </a>
   </div>
   {{ end }}
