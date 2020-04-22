@@ -1,7 +1,7 @@
 body,
 html {
   font-family: Arial, sans-serif;
-  font-size: 14 pt;
+  font-size: 16 pt;
   background-color: white;
 }
 header.navcontainer {
@@ -22,4 +22,5 @@ a.nav-link.active {
 
 img.nav-logo {
   height: 2rem;
+  width: auto;
 }
