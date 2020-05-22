@@ -25,6 +25,9 @@ img.nav-logo {
   color: black;
   background-color: rgb(233, 229, 211);
   font-family: Arial, Helvetica, sans-serif;
+  padding: 1em;
+  margin: 1em auto 1em;
+  max-width: 98%;
 }
 
 .footer{
