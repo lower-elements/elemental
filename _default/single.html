@@ -1,7 +1,7 @@
 {{- define "main" }}
 <article>
   <header>
-    <h1 style="display:none" arial-hidden="false">{{ .Title }}</h1>
+    <h2 aria-level="1">{{ .Title }}</h2>
     <small role="contentinfo" class="text-muted">Published on {{ .Date.Format "2006-01-02" }}
       {{- with .Param "author" }}
       by <strong>{{ . }}</strong> {{- end -}} {{ if not (eq .Lastmod .Date) }}
