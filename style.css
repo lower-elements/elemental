@@ -12,7 +12,7 @@ header.navcontainer {
 }
 
 a.nav-link {
-  color: black;
+  color: black!important;
 }
 
 img.nav-logo {
