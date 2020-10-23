@@ -5,6 +5,10 @@
   content="Fcomkww1I-Sno1t-AHl7vmzNiRld9QhtIP_NXWiLYvI"
 />
 
+{{/* Alternative output formats for this page */}}
+{{ range .AlternativeOutputFormats -}}
+    {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
+{{ end -}}
 
 {{/* Bootstrap */}}
 <link
