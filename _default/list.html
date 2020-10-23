@@ -4,7 +4,7 @@
 {{ .Content }}
 <hr />
 {{ with .Pages }}
-<section class="card-deck" aria-label="Articles in This Section">
+<section class="card-deck" aria-label="Pages in This Section">
   {{ range first 4 .}} {{ partial "post-card.html" . }} {{ end }}
 </section>
 <hr />
