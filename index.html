@@ -1,10 +1,10 @@
 {{- define "main" }}
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3"></div>
+    <div class="col-md">
         <img class="img-responsive img-thumbnail" src="/images/me.jpg" aria-label="Picture of me">
+        <div class="col-md">
+            {{ .Content }}
+        </div>
     </div>
-    <div class="col-md"></div>
-    {{ .Content }}
-</div>
-</div>
-{{ end -}}
+    {{ end -}}
