@@ -1,0 +1,27 @@
+<header>
+  <nav class="navbar navbar-expand-md navbar-light customnav">
+    <a class="navbar-brand" href="/">TheFake VIP</a>
+
+    {{/* Nav Toggler (for small screens) */}}
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle Navigation">
+      <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+    </button>
+
+    {{/* Links */}}
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav nav" role="navigation">
+        {{- range $page := .Site.Menus.main }}
+        <li class="nav-item">
+          <a href="{{ $page.URL }}" class="nav-link">
+            {{ $page.Title }}
+          </a>
+        </li>
+        {{ end -}}
+      </ul>
+
+    </div>
+
+
+  </nav>
+</header>
