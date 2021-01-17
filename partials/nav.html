@@ -10,15 +10,35 @@
 
     {{/* Links */}}
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav nav" role="navigation">
-        {{- range $page := .Site.Menus.main }}
+      <ul class="navbar-nav nav" role="navigation" aria-label="Site">
+        {{- $currentPage := . -}}
+        {{- range .Site.Menus.main }}
         <li class="nav-item">
-          <a href="{{ $page.URL }}" class="nav-link">
-            {{ $page.Title }}
+          <a href="{{ .URL }}"
+            class='nav-link
+          {{- if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }} active {{- end -}} '>
+            {{- .Pre }}
+            {{ .Title }}
+            {{- .Post }}
+            {{ if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }} <span
+              class="sr-only">(Current page)</span>
+            {{- end }}
           </a>
         </li>
         {{ end -}}
       </ul>
+
+      <ul class="navbar-nav nav ml-auto" role="navigation" aria-label="Social">
+        {{- range .Site.Menus.social }}
+        <li class="nav-item">
+          <a target="blank" href="{{ .URL }}" class="nav-link" title="{{ .Name }}" aria-label="{{ .Name }}">
+            <i class="fab fa-{{- .Identifier -}}" aria-hidden="true"></i>
+          </a>
+          </a>
+        </li>
+        {{ end -}}
+      </ul>
+    </div>
 
     </div>
 
