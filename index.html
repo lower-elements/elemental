@@ -1,8 +1,9 @@
 {{- define "main" }}
 <div class="row">
-    <div class="col-md-3"></div>
-    <div class="col-md">
+    <aside class="col-md-3 order-md-last">
         <img class="img-responsive img-thumbnail" src="/images/me.jpg" aria-label="Picture of me">
+    </aside>
+    <div class="col-md order-md-first">
         <div class="col-md">
             {{ .Content }}
         </div>
