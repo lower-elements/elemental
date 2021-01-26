@@ -15,14 +15,11 @@
         {{- range .Site.Menus.main }}
         <li class="nav-item">
           <a href="{{ .URL }}"
-            class='nav-link
-          {{- if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }} active {{- end -}} '>
+            class="nav-link
+            {{- if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }} active" aria-current="true" {{- else -}} " {{- end -}}>
             {{- .Pre }}
             {{ .Title }}
             {{- .Post }}
-            {{ if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }} <span
-              class="sr-only">(Current page)</span>
-            {{- end }}
           </a>
         </li>
         {{ end -}}
