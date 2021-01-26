@@ -1,0 +1,15 @@
+{{ define "main" }}
+<h1 class="sr-only">{{ .Title }}</h1>
+{{ with .Content }}
+{{ . }}
+<hr>
+{{ end }}
+{{ with .Pages }}
+<section aria-label="Articles" role="feed" aria-setsize="{{ len . }}">
+{{ range . }}
+{{ partial "post-card.html" . }}
+{{ end }}
+</section>
+</ol>
+{{ end }}
+{{ end }}
