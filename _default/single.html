@@ -1,0 +1,16 @@
+{{ define "main" }}
+<div class="row">
+    <div class="col-md-10">
+        <header>
+                <h1><a href="{{ .Permalink }}">{{ .Title }}</a></h1>
+                <small class="text-muted">
+                    Published on <time datetime="{{- .Date.Format "2006-01-02" -}}">{{- .Date.Format "January 2, 2006" -}}</time>
+                    &middot; {{ .ReadingTime }} minute{{- if not (eq .ReadingTime 1) -}}s{{- end }} read
+                </small>
+        </header>
+        <article>
+            {{ .Content }}
+        </article>
+    </div>
+</div>
+{{ end }}
