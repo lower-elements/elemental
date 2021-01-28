@@ -1,0 +1,8 @@
+body {
+    overflow: hidden;
+}
+
+.col-scrollable {
+    position: absolute;
+    overflow-y: scroll;
+}
