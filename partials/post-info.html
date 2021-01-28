@@ -1,4 +1,16 @@
                 <small class="text-muted">
                     Published on <time datetime="{{- .Date.Format "2006-01-02" -}}">{{- .Date.Format "January 2, 2006" -}}</time>
                     &middot; {{ .ReadingTime }} minute{{- if not (eq .ReadingTime 1) -}}s{{- end }} read
+                    {{- with .Param "tags" }}
+                    <br>
+                    <nav aria-label="Post tags">
+              {{ range $index, $tag := sort (sort .) }}
+              {{- if gt $index 0 }} &middot; {{ end -}}
+              {{ with $.Site.GetPage (printf "/tags/%s"  $tag) -}}
+              <a href="{{ .Permalink }}">{{ .Title }}</a>
+              {{- end -}}
+              {{- end -}}
+                    </nav>
+                    {{ end -}}
                 </small>
+
