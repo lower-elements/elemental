@@ -1,10 +1,8 @@
 {{ define "main" }}
 <h1 class="sr-only">{{ .Title }}</h1>
 {{ partial "alt-formats.html" . }}
-{{ with .Content }}
-{{ . }}
+{{ .Content }}
 <hr>
-{{ end }}
 {{ with .Pages }}
 <section aria-label="Articles" role="feed" aria-setsize="{{ len . }}">
 {{ range . }}

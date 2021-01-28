@@ -2,14 +2,14 @@
     <div class="col-md-10">
         <article class="card">
             <header class="card-header">
-                <h2 class="card-title">{{ .Title }}</h2>
+                <h2 class="card-title"><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
                 <small class="text-muted">Published on {{.Date.Format "2006-01-02" }}</small>
                 </header>
                 <div class="card-body">
                     {{ .Summary }}
                 </div>
                 <footer class="card-footer">
-                    <a class="card-link stretched-link" href="{{ .Permalink }}">Read More</a>
+                    <a class="card-link" href="{{ .RelPermalink }}">Read More</a>
                 </footer>
         </article>
     </div>

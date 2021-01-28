@@ -26,11 +26,16 @@
       </ul>
 
       <ul class="navbar-nav nav ml-auto" role="navigation" aria-label="Social">
+                             {{/* Here for now because I don't want target="blank" and the icon is a "fas" icon, not a "fab" one */}}
+        <li class="nav-item">
+          <a href="mailto:mikey@blindcomputing.org" class="nav-link" title="Email (mikey@blindcomputing.org)" aria-label="Email">
+            <i class="fas fa-envelope-square" aria-hidden="true"></i>
+          </a>
+        </li>
         {{- range .Site.Menus.social }}
         <li class="nav-item">
           <a target="blank" href="{{ .URL }}" class="nav-link" title="{{ .Name }}" aria-label="{{ .Name }}">
             <i class="fab fa-{{- .Identifier -}}" aria-hidden="true"></i>
-          </a>
           </a>
         </li>
         {{ end -}}
