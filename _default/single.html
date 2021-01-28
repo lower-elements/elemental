@@ -1,6 +1,6 @@
 {{ define "main" }}
 <div class="row">
-    <div class="col-md-9">
+    <div class="col-md-9 col-scrollable">
         <header>
                 <h1><a href="{{ .Permalink }}">{{ .Title }}</a></h1>
                 {{ partial "post-info" . }}
@@ -9,7 +9,7 @@
             {{ .Content }}
         </article>
     </div>
-    <aside class="col-md-3 order-last d-none d-md-block">
+    <aside class="col-md-3 col-scrollable order-last d-none d-md-block">
         <h3 aria-level="1">Table of Contents</h3>
         {{ .TableOfContents }}
     </aside>
