@@ -18,10 +18,15 @@
     {{/* Links */}}
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav nav navlinks customnav" role="navigation">
-        {{- range $page := .Site.Menus.main }}
+        {{- $currentPage := . -}}
+        {{- range .Site.Menus.main }}
         <li class="nav-item">
-          <a href="{{ $page.URL }}" class="nav-link">
-            {{ $page.Title }}
+          <a href="{{ .URL }}"
+            class="nav-link
+            {{- if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }} active" aria-current="true" {{- else -}} " {{- end -}}>
+            {{- .Pre }}
+            {{ .Title }}
+            {{- .Post }}
           </a>
         </li>
         {{ end -}}
