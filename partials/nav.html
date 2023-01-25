@@ -16,7 +16,7 @@
             ">
           <a href="{{ .URL }}"
             class="nav-link
-            {{- if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }} active" aria-current="true" {{- else -}} " {{- end -}}>
+            {{- if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }} active" aria-current="page" {{- else -}} " {{- end -}}>
             {{- .Pre }}
             {{ .Title }}
             {{- .Post }}
