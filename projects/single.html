@@ -20,6 +20,10 @@
 		{{ with .Param "subtitle" -}}
 		<h2>{{ . }}</h2>
 		{{- end }}
+		{{ with .Param "developers" -}}
+		{{ partial "developers.html" . -}}
+		<br>
+		{{- end }}
 	{{ with .Param "website" -}}
 	<a target="blank" href="{{ . }}">Website</a>
 	{{- end }}
