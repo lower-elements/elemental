@@ -1,0 +1,36 @@
+{{ define "main" }}
+<div class="row">
+	{{ $logos := .Resources.Match "logo*.*" -}}
+	{{ if $logos -}}
+	<div class="col-md-3">
+		<picture>
+			{{ range $logos -}}
+			<source srcset="{{ .RelPermalink }}" type="{{ .MediaType }}" sizes="{{ .Width }}x{{ .Height }}">
+			{{ end }}
+			{{ $logo := .Resources.GetMatch "logo*.*" -}}
+			{{ if $logo -}}
+			<img class="img-fluid img-thumbnail" src="{{ $logo.RelPermalink }}" type="{{ $logo.MediaType }}" width="{{ $logo.Width }}" height="{{ $logo.Height }}" alt="{{- .Title }} logo">
+			{{- end }}
+		</picture>
+	</div>
+	{{- end }}
+    <div class="col">
+        <header>
+                <h1><a href="{{ .Permalink }}">{{ .Title }}</a></h1>
+		{{ with .Param "subtitle" -}}
+		<h2>{{ . }}</h2>
+		{{- end }}
+	{{ with .Param "website" -}}
+	<a target="blank" href="{{ . }}">Website</a>
+	{{- end }}
+	{{ with .Param "code" -}}
+	<a target="blank" href="{{ . }}">Sourcecode</a>
+	{{- end }}
+        </header>
+    </div>
+</div>
+<h2 class="visually-hidden" id="description-heading">Project description</h2>
+        <article aria-labelledby="description-heading">
+            {{ .Content }}
+        </article>
+{{ end }}
