@@ -4,7 +4,7 @@
 {{ .Content }}
 <hr>
 {{ with .Pages }}
-<section aria-label="Articles" role="feed" aria-setsize="{{ len . }}">
+<section aria-label="{{ i18n "articles" | default "Articles" }}" role="feed" aria-setsize="{{ len . }}">
 {{ range . }}
 {{ partial "post-card.html" . }}
 {{ end }}

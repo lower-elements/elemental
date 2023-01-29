@@ -1,14 +1,12 @@
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
 
-      <a class="navbar-brand" href="/">
+	  <a class="navbar-brand" href="{{ relLangURL "/" }}">
         Dan Gero</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+	  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ i18n "toggle-nav" | default "Toggle Navigation" }}">"</button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0" aria-label="site">
+	    <ul class="navbar-nav me-auto mb-2 mb-lg-0" aria-label="{{ i18n "site" | default "site" }}">
         {{- $currentPage := . -}}
         {{- range .Site.Menus.main }}
         <li class="nav-item
@@ -43,20 +41,37 @@
       </ul>
 
       {{/* Social menu */}}
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0" aria-label="Social">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0" aria-label="{{ i18n "social" | default "social" }}">
                              {{/* Here for now because I don't want target="blank" and the icon is a "fas" icon, not a "fab" one */}}
         <li class="nav-item">
-          <a href="mailto:geroloid2000@gmail.com" class="nav-link" title="Email (geroloid2000@gmail.com)" aria-label="Email">
+		<a href="mailto:geroloid2000@gmail.com" class="nav-link" title="{{ i18n "Email" | default "Email" }} (geroloid2000@gmail.com)" aria-label="{{ i18n "Email" | default "Email" }}">
             <i class="fas fa-envelope-square" aria-hidden="true"></i>
           </a>
         </li>
         {{- range .Site.Menus.social }}
         <li class="nav-item">
-          <a target="blank" href="{{ .URL }}" class="nav-link" title="{{ .Name }}" aria-label="{{ .Name }}">
+          <a target="blank" href="{{ .URL }}" class="nav-link" title="{{ i18n .Identifier | default .Name }}" aria-label="{{ i18n .Identifier | default .Name }}">
             <i class="fab fa-{{- .Identifier -}}" aria-hidden="true"></i>
           </a>
         </li>
         {{ end -}}
+
+	{{/* Language selector */}}
+	{{ if .IsTranslated -}}
+	<li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="{{ i18n "Language" | default "Language" }}">
+		  <i class="fas fa-language" aria-hidden="true"></i>
+			<span class="visually-hidden">{{ i18n "Language" | default "Language" }}}</span>
+	  </a>
+	    <ul class="dropdown-menu">
+		    {{ range .AllTranslations -}}
+		    <li><a class="dropdown-item" href="{{ .Permalink }}">
+				    <strong>{{ .Language.LanguageName }}</strong>: {{ .Title }}
+			    </a></li>
+		    {{- end }}
+	    </ul>
+	</li>
+	{{- end }}
       </ul>
 
 {{/* Search box
