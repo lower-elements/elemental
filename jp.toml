@@ -42,3 +42,6 @@ other = "目次"
 
 [footer]
 other = "Copyright &copy; {{ .Year }} Garrett Brown (Code is {{ .CodeLicense }}, content is {{ .ContentLicense }})"
+
+[no-posts]
+other = "まだ投稿はありません。後でチェックするか、新しい投稿の通知を受けるために購読してください。"
