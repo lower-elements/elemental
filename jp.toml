@@ -1,0 +1,44 @@
+[toggle-nav]
+other = "トグルナビゲーション"
+
+[Email]
+other = "電子メール"
+
+[youtube] # Personal YouTube
+other = "パーソナルYouTube (@garrettbrown2000)"
+
+[youtube-square] # Music YouTube
+other = "音楽 YouTube (@dangero2000)"
+
+[Language]
+other = "言語"
+
+[alt-formats]
+other = "代替ページフォーマット"
+
+[rss-feed]
+other = "RSSフィード"
+
+[site]
+other = "ウェブサイト"
+
+[social]
+other = "ソーシャル・メディア"
+
+[read-more]
+other = "続きを読む"
+[published-on]
+other = "{{ . }} 日(日)掲載"
+
+[reading-time]
+one = "{{ .Count }}分で読める"
+other = "{{ .Count }}分で読める"
+
+[articles]
+other = "物品"
+
+[toc]
+other = "目次"
+
+[footer]
+other = "Copyright &copy; {{ .Year }} Garrett Brown (Code is {{ .CodeLicense }}, content is {{ .ContentLicense }})"
