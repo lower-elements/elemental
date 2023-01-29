@@ -1,6 +1,6 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="author" content="Michael Connor Buchan" />
+<meta name="author" content="Garrett Brown" />
 {{ with .Param "tags" -}}
 <meta name="keywords" content="
                                {{- range sort (sort .) -}} {{- . }} {{ end -}}
@@ -15,6 +15,11 @@
 {{- printf `
 <link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
 {{ end -}}
+
+{{/* Translations of this page */}}
+{{ range .Translations -}}
+<link rel="alternate" href="{{ .Permalink }}" hreflang="{{ .Lang }}" type="{{ .MediaType }}">
+{{- end }}
 
 {{/* Code License */}}
 <link rel="license" type="text/html" href="https://www.gnu.org/licenses/agpl-3.0-standalone.html" />
