@@ -1,0 +1,16 @@
+{{- define "main" }}
+<h1 class="sr-only">{{ .Title }}</h1>
+{{ partial "alt-formats.html" . }}
+{{ .Content }}
+<hr />
+{{ with .Pages }}
+<section class="card-deck" aria-label="Pages in This Section">
+  {{ range first 4 .}} {{ partial "post-card.html" . }} {{ end }}
+</section>
+<hr />
+<section class="card-deck" aria-label="Articles in This Section">
+  {{ range last 4 .}} {{ partial "post-card.html" . }} {{ end }}
+</section>
+{{ else }}
+<p>No posts were found in this section.</p>
+{{ end }} {{ end -}}

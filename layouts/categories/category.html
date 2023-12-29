@@ -1,0 +1,27 @@
+{{- define "main" }}
+<h1 class="sr-only">{{ .Title }}</h1>
+{{ partial "alt-formats.html" . }}
+{{ .Content }}
+<hr />
+{{ with .Pages }}
+<section class="row" aria-label="Articles in This Category">
+  {{ range .GroupBy "Section" }}
+  <div class="col-sm">
+    <a href="/{{ .Key }}">
+      {{ with $.Site.GetPage "section" .Key }}
+      <h2>{{.Title}}</h2>
+      {{ else }}
+      <h2>{{ .Key | title }}</h2>
+      {{ end }} 
+    </a>
+      {{ range .Pages }} {{ partial "post-card.html" . }} {{ end }}
+    </a>
+  </div>
+  {{ end }}
+</section>
+{{ else }}
+<p>
+  {{- with .Param "noContent" }} {{- . | html -}} {{- else -}} No posts were
+  found in this category. {{ end -}}
+</p>
+{{ end -}} {{ end -}}
