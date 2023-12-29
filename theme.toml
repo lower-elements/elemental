@@ -1,0 +1,15 @@
+# theme.toml template for a Hugo theme
+# See https://github.com/gohugoio/hugoThemes#themetoml for an example
+
+name = "Elemental"
+license = "AGPL-3-only"
+licenselink = "https://github.com/lower-elements/elemental/blob/main/LICENSE"
+description = "A simple, flexible, accessible theme made with Bootstrap 5"
+homepage = "https://github.com/lower-elements/elemental"
+tags = ["bootstrap"]
+features = []
+min_version = "0.41.0"
+
+[author]
+  name = "Michael Connor Buchan"
+  homepage = "https://thefake.vip"
