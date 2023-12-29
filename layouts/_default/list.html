@@ -1,0 +1,15 @@
+{{ define "main" }}
+<h1 class="visually-hidden">{{ .Title }}</h1>
+{{ partial "alt-formats.html" . }}
+{{ .Content }}
+<hr>
+{{ with .Pages }}
+<section aria-label="{{ i18n "articles" | default "Articles" }}" role="feed" aria-setsize="{{ len . }}">
+{{ range . }}
+{{ partial "post-card.html" . }}
+{{ end }}
+</section>
+{{ else -}}
+<p>{{ i18n "no-posts" | default "No posts here yet. Check back later or subscribe to be notified of new posts" }}</p>
+{{ end }}
+{{ end }}

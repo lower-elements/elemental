@@ -1,0 +1,18 @@
+                <small class="text-muted">
+			{{- i18n "published-on" (printf `
+			<time datetime="%s">%s</time>
+			` (.Date.Format "2006-01-02") (time.Format ":date_full" .Date)) | safeHTML -}}
+			&middot; {{ i18n "reading-time" .ReadingTime }}
+                    {{- with .Param "tags" }}
+                    <br>
+                    <nav aria-label="Post tags">
+              {{ range $index, $tag := sort (sort .) }}
+              {{- if gt $index 0 }} &middot; {{ end -}}
+              {{ with $.Site.GetPage (printf "/tags/%s"  $tag) -}}
+              <a href="{{ .Permalink }}">{{ .Title }}</a>
+              {{- end -}}
+              {{- end -}}
+                    </nav>
+                    {{ end -}}
+                </small>
+
