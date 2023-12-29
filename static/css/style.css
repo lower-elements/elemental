@@ -1,0 +1,75 @@
+body,
+html {
+  font-family: Arial, sans-serif;
+  color: black!important;
+  background-color: rgb(255, 254, 249); 
+}
+header.navcontainer {
+  width: 100vw;
+  border-bottom: 2px solid black;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+  background-color: rgb(248, 239, 200);
+}
+
+a.nav-link {
+  color: rgb(22, 21, 21)!important;
+}
+
+img.nav-logo {
+  height: 2rem;
+}
+
+.content{
+  line-height: 1.5em;
+  font-weight: bold;
+  color: black;
+  background-color: rgb(255, 254, 249);
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 1em;
+  margin: 1em auto 1em;
+  max-width: 98%;
+}
+
+.footer{
+  color: black;
+  background-color: rgb(255, 254, 249);
+}
+
+.customnav{
+  color: black;
+  background-color: rgb(248, 239, 200);
+  font-size: 1.2em;
+  font-weight: bold;  
+  text-align: right;
+  border: 0;
+}
+
+.customcard{
+  background-color: rgb(255, 254, 249);
+  color: rgb(51, 51, 100);
+}
+
+a:link{
+  color: rgb(51, 51, 100);
+}
+
+.btn, .btn-primary{
+  background-color: rgb(146, 129, 55);
+  color: white;
+  border: 0;
+}
+
+.btn:hover{
+  background-color: rgb(221, 185, 26);
+  color: white;
+  border: 0;
+}
+
+.customcard-text{
+  color: rgb(51, 51, 100);
+}
+
+.cardspan{
+  color: white;
+}
