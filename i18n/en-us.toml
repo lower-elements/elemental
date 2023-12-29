@@ -1,0 +1,9 @@
+[published-on]
+other = "Published on {{ . }}"
+
+[reading-time]
+one = "{{ .Count }} minute read"
+other = "{{ .Count }} minutes read"
+
+[footer]
+other = "Copyright &copy; {{ .Year }} Garrett Brown (Code is {{ .CodeLicense }}, content is {{ .ContentLicense }})"
