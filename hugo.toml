@@ -3,6 +3,12 @@
 [module.hugoVersion]
 min = "0.111.3"
 
+[markup]
+  [markup.highlight]
+    guessSyntax = true
+    lineNos = true
+    noClasses = false
+
 [params.author]
 name = "<author's name>"
 url = "https://example.com"
