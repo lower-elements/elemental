@@ -45,11 +45,14 @@
       {{/* Social menu */}}
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0" aria-label="Social">
                              {{/* Here for now because I don't want target="blank" and the icon is a "fas" icon, not a "fab" one */}}
+                             {{ with .Site.Params.author.email -}}
         <li class="nav-item">
-          <a href="mailto:mikey@blindcomputing.org" class="nav-link" title="Email (mikey@blindcomputing.org)" aria-label="Email">
+            <a href="mailto:{{ . }}" class="nav-link" title="Email ({{ . }})" aria-label="Email">
             <i class="fas fa-envelope-square" aria-hidden="true"></i>
           </a>
         </li>
+        {{- end}}
+
         {{- range .Site.Menus.social }}
         <li class="nav-item">
           <a target="blank" href="{{ .URL }}" class="nav-link" title="{{ .Name }}" aria-label="{{ .Name }}">
