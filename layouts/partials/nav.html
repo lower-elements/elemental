@@ -19,7 +19,11 @@
             class="nav-link
             {{- if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }} active" aria-current="page" {{- else -}} " {{- end -}}>
             {{- .Pre }}
+            {{- with .Page }}
+            {{ .LinkTitle }}
+            {{- else -}}
             {{ .Title }}
+            {{- end }}
             {{- .Post }}
           </a>
           {{/* Submenus */}}
