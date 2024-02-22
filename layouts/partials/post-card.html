@@ -3,7 +3,9 @@
         <article class="card">
             <header class="card-header">
                 <h2 class="card-title"><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+                {{ if not (or .Site.Params.hidePostCardMeta .Params.hidePostCardMeta) }}
                 {{ partial "post-info" . }}
+                {{ end -}}
                 </header>
                 <div class="card-body">
                     {{ .Summary }}
