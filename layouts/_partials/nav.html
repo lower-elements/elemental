@@ -48,14 +48,14 @@
         {{- with .Site.Params.author.email }}
         <li class="nav-item">
           <a href="mailto:{{ . }}" class="nav-link" title="Email ({{ . }})" aria-label="Email">
-            <span aria-hidden="true">@</span>
+            {{- partial "icon.html" "envelope-fill" -}}
           </a>
         </li>
         {{- end }}
         {{- range .Site.Menus.social }}
         <li class="nav-item">
           <a target="_blank" rel="noopener" href="{{ .URL }}" class="nav-link" title="{{ .Name }}" aria-label="{{ .Name }}">
-            {{- .Identifier -}}
+            {{- partial "icon.html" .Identifier -}}
           </a>
         </li>
         {{- end }}

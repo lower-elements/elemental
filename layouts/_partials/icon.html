@@ -1,0 +1,6 @@
+{{- $name := . -}}
+{{- with resources.Get (printf "elemental/icons/social/%s.svg" $name) -}}
+<span class="elemental-icon" aria-hidden="true">{{ .Content | safeHTML }}</span>
+{{- else -}}
+<span>{{ $name }}</span>
+{{- end -}}

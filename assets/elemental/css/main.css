@@ -1,3 +1,14 @@
+html {
+    color-scheme: light dark;
+}
+
+.elemental-icon svg {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+    fill: currentColor;
+}
+
 @media (min-width: 992px) {
     .elemental-sidebar {
         position: sticky;
