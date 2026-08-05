@@ -1,6 +1,5 @@
 <div class="small text-body-secondary">
-  {{ $date := .Date | time.Format ":date_long" }}
-  {{ T "published_on" (printf `<time datetime="%s">%s</time>` (.Date.Format "2006-01-02") $date | safeHTML) }}
+  <time datetime="{{ .Date.Format "2006-01-02" }}">{{ T "published_on" (.Date | time.Format ":date_long") }}</time>
   <span aria-hidden="true"> · </span>{{ T "reading_time" (dict "count" .ReadingTime) }}
   {{- with .Param "tags" }}
   <nav aria-label="{{ T `post_tags` }}">
