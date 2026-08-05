@@ -1,130 +1,79 @@
-<nav class="navbar navbar-default navbar-fixed-top navbar-expand-lg d-print-none">
+<nav class="navbar navbar-expand-lg bg-body-tertiary d-print-none" aria-label="Site navigation">
   <div class="container-fluid">
-
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand" href="{{ relLangURL `/` }}">
       {{- .Site.Params.shortTitle | default .Site.Title -}}
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#elemental-navbar"
+      aria-controls="elemental-navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0" aria-label="site">
+    <div class="collapse navbar-collapse" id="elemental-navbar">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         {{- $currentPage := . -}}
         {{- range .Site.Menus.main }}
-        <li class="nav-item
-                           {{- if .HasChildren }} dropdown {{- end -}}
-            ">
-          <a href="{{ .URL }}" class="nav-link
-            {{- if or ($currentPage.IsMenuCurrent " main" .) ($currentPage.HasMenuCurrent "main" .) }} active"
-            aria-current="page" {{- else -}} " {{- end -}}>
-            {{- .Pre }}
-            {{- with .Page }}
-            {{ .LinkTitle }}
-            {{- else -}}
-            {{ .Name }}
+        {{- $isCurrent := $currentPage.IsMenuCurrent "main" . -}}
+        {{- $hasCurrent := $currentPage.HasMenuCurrent "main" . -}}
+        <li class="nav-item{{ if .HasChildren }} dropdown{{ end }}">
+          <div class="d-flex align-items-center">
+            <a href="{{ .URL }}" class="nav-link{{ if or $isCurrent $hasCurrent }} active{{ end }}"
+              {{- if $isCurrent }} aria-current="page"{{ end }}>
+              {{- .Pre -}}
+              {{- with .Page }}{{ .LinkTitle }}{{ else }}{{ .Name }}{{ end -}}
+              {{- .Post -}}
+            </a>
+            {{- if .HasChildren }}
+            <button class="btn btn-link nav-link dropdown-toggle dropdown-toggle-split" type="button"
+              data-bs-toggle="dropdown" aria-expanded="false" aria-label="Toggle menu for {{ .Name }}">
+              <span class="visually-hidden">Toggle menu for {{ .Name }}</span>
+            </button>
+            <ul class="dropdown-menu">
+              {{- range .Children }}
+              {{- $childCurrent := $currentPage.IsMenuCurrent "main" . -}}
+              <li>
+                <a href="{{ .URL }}" class="dropdown-item{{ if $childCurrent }} active{{ end }}"
+                  {{- if $childCurrent }} aria-current="page"{{ end }}>
+                  {{- .Pre }}{{ .Name }}{{ .Post -}}
+                </a>
+              </li>
+              {{- end }}
+            </ul>
             {{- end }}
-            {{- .Post }}
-          </a>
-          {{/* Submenus */}}
-          {{- if .HasChildren }}
-          <a class=" nav-link dropdown-toggle dropdown-toggle-split" href="#" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            <span class="visually-hidden">Toggle menu for {{ .Title }}</span>
-          </a>
-          <ul class="dropdown-menu">
-            {{- range .Children }}
-            <li><a href="{{ .URL }}" class="dropdown-item
-            {{- if or ($currentPage.IsMenuCurrent " main" .) ($currentPage.HasMenuCurrent "main" .) }} active"
-                aria-current="true" {{- else -}} " {{- end -}}>
-            {{- .Pre }}
-            {{ .Title }}
-            {{- .Post }}
-                  </a></li>
-              {{ end -}}
-          </ul>
-{{ end -}}
+          </div>
         </li>
-        {{ end -}}
+        {{- end }}
       </ul>
 
-      {{/* Social menu */}}
-      <ul class=" navbar-nav ms-auto mb-2 mb-lg-0" aria-label="Social">
-                {{/* Here for now because I don't want target="blank" and the icon is a "fas" icon, not a "fab" one */}}
-                {{ with .Site.Params.author.email -}}
-            <li class="nav-item">
-              <a href="mailto:{{ . }}" class="nav-link" title="Email ({{ . }})" aria-label="Email">
-                <i class="fas fa-envelope-square" aria-hidden="true"></i>
-              </a>
-            </li>
-            {{- end}}
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0" aria-label="Social links">
+        {{- with .Site.Params.author.email }}
+        <li class="nav-item">
+          <a href="mailto:{{ . }}" class="nav-link" title="Email ({{ . }})" aria-label="Email">
+            <span aria-hidden="true">@</span>
+          </a>
+        </li>
+        {{- end }}
+        {{- range .Site.Menus.social }}
+        <li class="nav-item">
+          <a target="_blank" rel="noopener" href="{{ .URL }}" class="nav-link" title="{{ .Name }}" aria-label="{{ .Name }}">
+            {{- .Identifier -}}
+          </a>
+        </li>
+        {{- end }}
+      </ul>
 
-            {{- range .Site.Menus.social }}
-            <li class="nav-item">
-              <a target="blank" href="{{ .URL }}" class="nav-link" title="{{ .Name }}" aria-label="{{ .Name }}">
-                <i class="fab fa-{{- .Identifier -}}" aria-hidden="true"></i>
-              </a>
-            </li>
-            {{ end -}}
-          </ul>
-
-          {{/* Site controls */}}
-          <ul class="navbar-nav ms-2 mb-2 mb-lg-0" aria-label="Settings">
-            {{/* Bootstrap theme switcher (from there documentation site) */}}
-            <li class="nav-item dropdown">
-              <button class="btn btn-sm btn-link nav-link dropdown-toggle d-flex align-items-center" id="bd-theme"
-                type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static"
-                aria-label="Toggle theme">
-                <i class="fas fa-sun" aria-hidden="true"></i>
-              </button>
-              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
-                <li>
-                  <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light"
-                    aria-pressed="false">
-                    <svg class="bi me-2 opacity-50 theme-icon">
-                      <use href="#sun-fill"></use>
-                    </svg>
-                    Light
-                    <svg class="bi ms-auto d-none">
-                      <use href="#check2"></use>
-                    </svg>
-                  </button>
-                </li>
-                <li>
-                  <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark"
-                    aria-pressed="false">
-                    <svg class="bi me-2 opacity-50 theme-icon">
-                      <use href="#moon-stars-fill"></use>
-                    </svg>
-                    Dark
-                    <svg class="bi ms-auto d-none">
-                      <use href="#check2"></use>
-                    </svg>
-                  </button>
-                </li>
-                <li>
-                  <button type="button" class="dropdown-item d-flex align-items-center active"
-                    data-bs-theme-value="auto" aria-pressed="true">
-                    <svg class="bi me-2 opacity-50 theme-icon">
-                      <use href="#circle-half"></use>
-                    </svg>
-                    Auto
-                    <svg class="bi ms-auto d-none">
-                      <use href="#check2"></use>
-                    </svg>
-                  </button>
-                </li>
-              </ul>
-            </li>
-          </ul>
-
-          {{/* Search box
-          <form class="d-flex ms-auto" role="search">
-            <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-          </form>
-          */}}
+      <div class="dropdown ms-lg-2 mb-2 mb-lg-0">
+        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" id="elemental-theme" type="button"
+          aria-expanded="false" data-bs-toggle="dropdown">Appearance</button>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="elemental-theme">
+          {{- range slice "light" "dark" "auto" }}
+          <li>
+            <button type="button" class="dropdown-item" data-bs-theme-value="{{ . }}" aria-pressed="false">
+              {{ title . }}
+            </button>
+          </li>
+          {{- end }}
+        </ul>
+      </div>
     </div>
-
   </div>
 </nav>
