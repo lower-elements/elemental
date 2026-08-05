@@ -25,10 +25,10 @@
 		<br>
 		{{- end }}
 	{{ with .Param "website" -}}
-	<a target="blank" href="{{ . }}">Website</a>
+	<a target="_blank" rel="noopener" href="{{ . }}">Website</a>
 	{{- end }}
 	{{ with .Param "code" -}}
-	<a target="blank" href="{{ . }}">Sourcecode</a>
+	<a target="_blank" rel="noopener" href="{{ . }}">Source code</a>
 	{{- end }}
         </header>
     </div>

@@ -1,17 +1,17 @@
-<div class="row justify-content-center mb-2">
+<div class="row justify-content-center mb-3">
     <div class="col-md-10">
         <article class="card">
             <header class="card-header">
-                <h2 class="card-title"><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+                <h2 class="card-title"><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
                 {{ if not (or .Site.Params.hidePostCardMeta .Params.hidePostCardMeta) }}
                 {{ partial "post-info" . }}
                 {{ end -}}
                 </header>
                 <div class="card-body">
-                    {{ .Summary }}
+                    {{ .Description | default .Plain | truncate 280 }}
                 </div>
                 <footer class="card-footer">
-                    <a class="card-link stretched-link" href="{{ .RelPermalink }}">Read More</a>
+                    <a class="card-link" href="{{ .RelPermalink }}">Read More</a>
                 </footer>
         </article>
     </div>

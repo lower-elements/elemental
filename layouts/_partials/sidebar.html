@@ -1,0 +1,8 @@
+{{- with .Fragments -}}
+{{- with .Headings -}}
+<section class="elemental-sidebar-toc" aria-labelledby="table-of-contents-heading">
+  <h2 id="table-of-contents-heading">Table of Contents</h2>
+  {{ $.TableOfContents }}
+</section>
+{{- end -}}
+{{- end -}}

@@ -5,8 +5,10 @@
 {{ .Content }}
 <footer>
 Last modified: <time datetime="{{- .Lastmod.Format "2006-01-02" -}}">{{- .Lastmod.Format "January 2, 2006" -}}</time>
-      {{ with .Param "editor" | default .GitInfo.AuthorName -}}
-        by {{ . }}
-        {{- end -}}
+      {{ with .Param "editor" -}}
+      by {{ . }}
+      {{- else with .GitInfo -}}
+      by {{ .AuthorName }}
+      {{- end -}}
 </footer>
     {{ end -}}

@@ -4,9 +4,9 @@
 {{ .Content }}
 <hr>
 {{ with .Pages }}
-<section aria-label="Articles" role="feed" aria-setsize="{{ len . }}">
+<section aria-label="Articles">
 {{ range . }}
-{{ partial "post-card.html" . }}
+{{ .Render "_views/post-card" }}
 {{ end }}
 </section>
 {{ else -}}

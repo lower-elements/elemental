@@ -1,4 +1,8 @@
-.col-scrollable {
-    position: absolute;
-    overflow-y: scroll;
+@media (min-width: 992px) {
+    .elemental-sidebar {
+        position: sticky;
+        top: 1rem;
+        max-height: calc(100vh - 2rem);
+        overflow-y: auto;
+    }
 }

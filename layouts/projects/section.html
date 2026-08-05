@@ -9,8 +9,8 @@
 	<div class="row row-cols-1 row-cols-md-3 row-cols-lg-4">
 {{ range .Pages.ByTitle }}
 <div class="col">
-{{ partial "project-card.html" . }}
-	</div>
+{{ .Render "_views/card" }}
+		</div>
 {{ end }}
 	</div>
 </section>
