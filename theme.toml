@@ -8,7 +8,7 @@ description = "A simple, flexible, accessible theme made with Bootstrap 5"
 homepage = "https://github.com/lower-elements/elemental"
 tags = ["bootstrap"]
 features = []
-min_version = "0.41.0"
+min_version = "0.154.5"
 
 [author]
   name = "Michael Connor Buchan"
