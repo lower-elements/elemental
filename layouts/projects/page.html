@@ -1,40 +1,36 @@
 {{ define "main" }}
-<div class="row">
-	{{ $logos := .Resources.Match "logo*.*" -}}
-	{{ if $logos -}}
-	<div class="col-md-3">
-		<picture>
-			{{ range $logos -}}
-			<source srcset="{{ .RelPermalink }}" type="{{ .MediaType }}" sizes="{{ .Width }}x{{ .Height }}">
-			{{ end }}
-			{{ $logo := .Resources.GetMatch "logo*.*" -}}
-			{{ if $logo -}}
-			<img class="img-fluid img-thumbnail" src="{{ $logo.RelPermalink }}" type="{{ $logo.MediaType }}" width="{{ $logo.Width }}" height="{{ $logo.Height }}" alt="{{- .Title }} logo">
-			{{- end }}
-		</picture>
-	</div>
-	{{- end }}
-    <div class="col">
-        <header>
-                <h1><a href="{{ .Permalink }}">{{ .Title }}</a></h1>
-		{{ with .Param "subtitle" -}}
-		<h2>{{ . }}</h2>
-		{{- end }}
-		{{ with .Param "developers" -}}
-		{{ partial "developers.html" . -}}
-		<br>
-		{{- end }}
-	{{ with .Param "website" -}}
-	<a target="_blank" rel="noopener" href="{{ . }}">Website</a>
-	{{- end }}
-	{{ with .Param "code" -}}
-	<a target="_blank" rel="noopener" href="{{ . }}">Source code</a>
-	{{- end }}
-        </header>
-    </div>
+{{ $logoPattern := .Param "logo" | default "logo*" }}
+{{ $logo := .Resources.GetMatch $logoPattern }}
+<div class="row align-items-start g-4">
+  {{ with $logo }}
+  <div class="col-md-3">
+    <img class="img-fluid img-thumbnail" src="{{ .RelPermalink }}"
+      {{- if ne .MediaType.SubType "svg" }} width="{{ .Width }}" height="{{ .Height }}"{{ end }}
+      alt="{{ $.Param `logoAlt` | default (T `project_logo_alt` $.Title) }}">
+  </div>
+  {{ end }}
+  <div class="{{ if $logo }}col-md-9{{ else }}col{{ end }}">
+    <header>
+      <h1>{{ .Title }}</h1>
+      {{- with .Param "subtitle" }}
+      <p class="lead">{{ . }}</p>
+      {{- end }}
+      {{- with .Param "developers" }}
+      <div>{{ partial "developers.html" . }}</div>
+      {{- end }}
+      <div class="mt-2">
+        {{- with .Param "website" }}
+        <a class="me-3" target="_blank" rel="noopener" href="{{ . }}">{{ T "website" }}</a>
+        {{- end }}
+        {{- with .Param "code" }}
+        <a target="_blank" rel="noopener" href="{{ . }}">{{ T "source_code" }}</a>
+        {{- end }}
+      </div>
+    </header>
+  </div>
 </div>
-<h2 class="visually-hidden" id="description-heading">Project description</h2>
-        <article aria-labelledby="description-heading">
-            {{ .Content }}
-        </article>
+<h2 class="visually-hidden" id="description-heading">{{ T "project_description" }}</h2>
+<article class="mt-4" aria-labelledby="description-heading">
+  {{ .Content }}
+</article>
 {{ end }}
