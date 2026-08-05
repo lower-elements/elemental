@@ -24,7 +24,7 @@
 {{- with resources.Get "elemental/js/color-mode.js" | fingerprint }}
 <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
 {{- end }}
-{{- range slice "elemental/vendor/bootstrap/bootstrap.min.css" "elemental/css/main.css" "elemental/css/syntax.css" }}
+{{- range slice "elemental/bootstrap/bootstrap.min.css" "elemental/css/main.css" "elemental/css/syntax.css" }}
   {{- with resources.Get . | minify | fingerprint }}
 <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
   {{- end }}
@@ -34,6 +34,6 @@
 <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
   {{- end }}
 {{- end }}
-{{- with resources.Get "elemental/vendor/bootstrap/bootstrap.bundle.min.js" | fingerprint }}
+{{- with resources.Get "elemental/bootstrap/bootstrap.bundle.min.js" | fingerprint }}
 <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" defer></script>
 {{- end }}
