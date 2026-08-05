@@ -6,7 +6,7 @@
 {{ with .Pages }}
 <section aria-label="{{ T `articles` }}">
 {{ range . }}
-{{ .Render "_views/post-card" }}
+{{ partial "post-card.html" . }}
 {{ end }}
 </section>
 {{ else -}}
