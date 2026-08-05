@@ -2,11 +2,19 @@ html {
     color-scheme: light dark;
 }
 
+.content {
+    max-width: 1140px;
+}
+
 .elemental-icon svg {
     width: 1em;
     height: 1em;
     vertical-align: -0.125em;
     fill: currentColor;
+}
+
+.highlight {
+    overflow-x: auto;
 }
 
 @media (min-width: 992px) {

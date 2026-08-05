@@ -4,8 +4,9 @@
 {{ .Content }}
 <hr>
 {{ range .Pages.GroupByParam "status" }}
-<section aria-labelledby="{{- .Key -}}-heading">
-	<h2 id="{{- .Key -}}-heading">{{ replace .Key "-" " " | title }}</h2>
+{{ $status := .Key | urlize }}
+<section aria-labelledby="{{ $status }}-heading">
+		<h2 id="{{ $status }}-heading">{{ T (printf "project_status_%s" $status) | default (humanize .Key) }}</h2>
 	<div class="row row-cols-1 row-cols-md-3 row-cols-lg-4">
 {{ range .Pages.ByTitle }}
 <div class="col">

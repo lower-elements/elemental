@@ -11,7 +11,7 @@
                     {{ .Description | default .Plain | truncate 280 }}
                 </div>
                 <footer class="card-footer">
-                    <a class="card-link" href="{{ .RelPermalink }}">Read More</a>
+                    <a class="card-link" href="{{ .RelPermalink }}">{{ T "read_more" }}</a>
                 </footer>
         </article>
     </div>

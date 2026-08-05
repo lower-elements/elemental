@@ -1,0 +1,96 @@
+[skip_to_content]
+other = "Skip to content"
+
+[site_navigation]
+other = "Site navigation"
+
+[toggle_navigation]
+other = "Toggle navigation"
+
+[toggle_menu]
+other = "Toggle menu for {{ . }}"
+
+[social_links]
+other = "Social links"
+
+[email]
+other = "Email"
+
+[email_address]
+other = "Email ({{ . }})"
+
+[appearance]
+other = "Appearance"
+
+[theme_light]
+other = "Light"
+
+[theme_dark]
+other = "Dark"
+
+[theme_auto]
+other = "Auto"
+
+[articles]
+other = "Articles"
+
+[no_posts]
+other = "No posts here yet. Check back later or subscribe to be notified of new posts."
+
+[table_of_contents]
+other = "Table of contents"
+
+[published_on]
+other = "Published on {{ . }}"
+
+[reading_time]
+one = "{{ .count }} minute read"
+other = "{{ .count }} minutes read"
+
+[post_tags]
+other = "Post tags"
+
+[read_more]
+other = "Read more"
+
+[learn_more]
+other = "Learn more"
+
+[website]
+other = "Website"
+
+[source_code]
+other = "Source code"
+
+[co_developed_with]
+other = "Co-developed with:"
+
+[last_modified]
+other = "Last modified: {{ . }}"
+
+[by]
+other = "by {{ . }}"
+
+[project_description]
+other = "Project description"
+
+[project_logo_alt]
+other = "{{ . }} logo"
+
+[project_status_active]
+other = "Active"
+
+[project_status_inactive]
+other = "Inactive"
+
+[alternative_formats]
+other = "Alternative page formats"
+
+[rss_feed]
+other = "RSS feed"
+
+[site_code_license]
+other = "Site code: AGPL-3.0-only"
+
+[content_license]
+other = "Content: CC BY-SA 4.0"

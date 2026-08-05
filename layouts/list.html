@@ -4,12 +4,12 @@
 {{ .Content }}
 <hr>
 {{ with .Pages }}
-<section aria-label="Articles">
+<section aria-label="{{ T `articles` }}">
 {{ range . }}
 {{ .Render "_views/post-card" }}
 {{ end }}
 </section>
 {{ else -}}
-<p>No posts here yet. Check back later or subscribe to be notified of new posts</p>
+<p>{{ T "no_posts" }}</p>
 {{ end }}
 {{ end }}

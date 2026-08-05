@@ -1,16 +1,15 @@
-                <small class="text-muted">
-                    Published on <time datetime="{{- .Date.Format "2006-01-02" -}}">{{- .Date.Format "January 2, 2006" -}}</time>
-                    &middot; {{ .ReadingTime }} minute{{- if not (eq .ReadingTime 1) -}}s{{- end }} read
-                    {{- with .Param "tags" }}
-                    <br>
-                    <nav aria-label="Post tags">
-              {{ range $index, $tag := sort (sort .) }}
-              {{- if gt $index 0 }} &middot; {{ end -}}
-              {{ with $.Site.GetPage (printf "/tags/%s"  $tag) -}}
-              <a href="{{ .Permalink }}">{{ .Title }}</a>
-              {{- end -}}
-              {{- end -}}
-                    </nav>
-                    {{ end -}}
-                </small>
-
+<div class="small text-body-secondary">
+  {{ $date := .Date | time.Format ":date_long" }}
+  {{ T "published_on" (printf `<time datetime="%s">%s</time>` (.Date.Format "2006-01-02") $date | safeHTML) }}
+  <span aria-hidden="true"> · </span>{{ T "reading_time" (dict "count" .ReadingTime) }}
+  {{- with .Param "tags" }}
+  <nav aria-label="{{ T `post_tags` }}">
+    {{- range $index, $tag := sort . }}
+      {{- if gt $index 0 }} <span aria-hidden="true"> · </span> {{ end -}}
+      {{- with $.Site.GetPage (printf "/tags/%s" ($tag | urlize)) }}
+      <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+      {{- end }}
+    {{- end }}
+  </nav>
+  {{- end }}
+</div>

@@ -1,10 +1,10 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary d-print-none" aria-label="Site navigation">
+<nav class="navbar navbar-expand-lg bg-body-tertiary d-print-none" aria-label="{{ T `site_navigation` }}">
   <div class="container-fluid">
     <a class="navbar-brand" href="{{ relLangURL `/` }}">
       {{- .Site.Params.shortTitle | default .Site.Title -}}
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#elemental-navbar"
-      aria-controls="elemental-navbar" aria-expanded="false" aria-label="Toggle navigation">
+      aria-controls="elemental-navbar" aria-expanded="false" aria-label="{{ T `toggle_navigation` }}">
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -24,8 +24,8 @@
             </a>
             {{- if .HasChildren }}
             <button class="btn btn-link nav-link dropdown-toggle dropdown-toggle-split" type="button"
-              data-bs-toggle="dropdown" aria-expanded="false" aria-label="Toggle menu for {{ .Name }}">
-              <span class="visually-hidden">Toggle menu for {{ .Name }}</span>
+              data-bs-toggle="dropdown" aria-expanded="false" aria-label="{{ T `toggle_menu` .Name }}">
+              <span class="visually-hidden">{{ T "toggle_menu" .Name }}</span>
             </button>
             <ul class="dropdown-menu">
               {{- range .Children }}
@@ -44,10 +44,10 @@
         {{- end }}
       </ul>
 
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0" aria-label="Social links">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0" aria-label="{{ T `social_links` }}">
         {{- with .Site.Params.author.email }}
         <li class="nav-item">
-          <a href="mailto:{{ . }}" class="nav-link" title="Email ({{ . }})" aria-label="Email">
+          <a href="mailto:{{ . }}" class="nav-link" title="{{ T `email_address` . }}" aria-label="{{ T `email` }}">
             {{- partial "icon.html" "envelope-fill" -}}
           </a>
         </li>
@@ -63,12 +63,12 @@
 
       <div class="dropdown ms-lg-2 mb-2 mb-lg-0">
         <button class="btn btn-sm btn-outline-secondary dropdown-toggle" id="elemental-theme" type="button"
-          aria-expanded="false" data-bs-toggle="dropdown">Appearance</button>
+          aria-expanded="false" data-bs-toggle="dropdown">{{ T "appearance" }}</button>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="elemental-theme">
           {{- range slice "light" "dark" "auto" }}
           <li>
             <button type="button" class="dropdown-item" data-bs-theme-value="{{ . }}" aria-pressed="false">
-              {{ title . }}
+              {{ T (printf "theme_%s" .) }}
             </button>
           </li>
           {{- end }}

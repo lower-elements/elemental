@@ -1,5 +1,5 @@
 {{ with  .OutputFormats.Get "rss" -}}
-<nav aria-label="Alternative page formats">
-    <a href="{{ .Permalink }}">RSS feed</a>
+<nav aria-label="{{ T `alternative_formats` }}">
+    <a href="{{ .Permalink }}">{{ T "rss_feed" }}</a>
 </nav>
 {{- end }}
