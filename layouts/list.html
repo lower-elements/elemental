@@ -6,7 +6,7 @@
 {{ with .Pages }}
 <section class="mx-auto reading-column" aria-label="{{ T `articles` }}">
 {{ range . -}}
-{{ partial "post-card.html" . }}
+{{ .Render "card" }}
 {{ end -}}
 </section>
 {{ else -}}
