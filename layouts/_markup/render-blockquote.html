@@ -1,0 +1,24 @@
+{{- $caption := .Attributes.caption -}}
+{{- $work := .Attributes.work -}}
+{{- $cite := .Attributes.cite -}}
+{{- $class := .Attributes.class -}}
+{{- $id := .Attributes.id -}}
+{{- $hasAttribution := or $caption $work -}}
+{{- if $hasAttribution }}
+<figure>
+{{- end }}
+  <blockquote class="blockquote{{ with $class }} {{ . }}{{ end }}"{{ with $id }} id="{{ . }}"{{ end }}{{ with $cite }} cite="{{ . }}"{{ end }}>
+    {{ .Text }}
+  </blockquote>
+{{- if $hasAttribution }}
+    <figcaption class="blockquote-footer">
+      {{- with $caption }}{{ . }}{{ end -}}
+      {{- with $work }}
+        {{- if $caption }} — {{ end -}}
+        <cite>
+          {{- if $cite }}<a href="{{ $cite }}">{{ . }}</a>{{ else }}{{ . }}{{ end -}}
+        </cite>
+      {{- end }}
+    </figcaption>
+</figure>
+{{- end }}
