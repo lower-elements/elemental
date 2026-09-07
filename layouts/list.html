@@ -1,13 +1,13 @@
 {{ define "main" }}
-<h1 class="visually-hidden">{{ .Title }}</h1>
+<h1 class="h2">{{ .Title }}</h1>
 {{ partial "alt-formats.html" . }}
 {{ .Content }}
 <hr>
 {{ with .Pages }}
-<section aria-label="{{ T `articles` }}">
-{{ range . }}
+<section class="mx-auto reading-column" aria-label="{{ T `articles` }}">
+{{ range . -}}
 {{ partial "post-card.html" . }}
-{{ end }}
+{{ end -}}
 </section>
 {{ else -}}
 <p>{{ T "no_posts" }}</p>

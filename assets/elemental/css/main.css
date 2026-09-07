@@ -2,8 +2,16 @@ html {
     color-scheme: light dark;
 }
 
+.reading-column {
+    max-width: 50rem;
+}
+
 .content {
     max-width: 1140px;
+}
+
+.post-card-content> :last-child {
+    margin-bottom: 0;
 }
 
 .elemental-icon svg {
