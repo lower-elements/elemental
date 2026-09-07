@@ -1,0 +1,25 @@
+{{- $variants := dict
+  "note" "info"
+  "tip" "success"
+  "important" "primary"
+  "warning" "danger"
+  "caution" "warning"
+-}}
+{{- $variant := or (index $variants .AlertType) "secondary" -}}
+{{- $label := or .AlertTitle (i18n .AlertType) (title .AlertType) -}}
+{{- $collapsible := or (eq .AlertSign "+") (eq .AlertSign "-") -}}
+{{- $class := .Attributes.class -}}
+{{- $id := .Attributes.id -}}
+<div class="card my-4 border-{{ $variant }}{{ with $class }} {{ . }}{{ end }}"{{ with $id }} id="{{ . }}"{{ end }}>
+  {{- if $collapsible }}
+  <details class="card-body"{{ if eq .AlertSign "+" }} open{{ end }}>
+    <summary class="card-title fw-semibold text-{{ $variant }}-emphasis">{{ $label }}</summary>
+    {{ .Text }}
+  </details>
+  {{- else }}
+  <div class="card-body">
+    <p class="card-title fw-semibold text-{{ $variant }}-emphasis">{{ $label }}</p>
+    {{ .Text }}
+  </div>
+  {{- end }}
+</div>
