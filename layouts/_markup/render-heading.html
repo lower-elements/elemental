@@ -1,0 +1,5 @@
+{{- $anchor := .Anchor -}}
+{{- if findRE `^-?[0-9]` $anchor -}}
+  {{- $anchor = printf "h-%s" $anchor -}}
+{{- end -}}
+<h{{ .Level }} id="{{ $anchor }}">{{ .Text }}</h{{ .Level }}>

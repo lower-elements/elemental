@@ -1,0 +1,25 @@
+{{- define "contents-items" -}}
+  {{- range . -}}
+    {{- $id := .ID -}}
+    {{- if findRE `^-?[0-9]` $id -}}
+      {{- $id = printf "h-%s" $id -}}
+    {{- end -}}
+    <li class="nav-item">
+      <a class="nav-link" href="#{{ $id }}">{{ .Title }}</a>
+      {{- with .Headings }}
+        <ol class="nav flex-column ms-3">
+          {{- template "contents-items" . -}}
+        </ol>
+      {{- end }}
+    </li>
+  {{- end -}}
+{{- end -}}
+
+{{- with .Fragments.Headings }}
+  <nav id="toc" aria-labelledby="toc-heading">
+    <h2 id="toc-heading" class="h5">{{ T "table_of_contents" }}</h2>
+    <ol class="nav flex-column">
+      {{- template "contents-items" . -}}
+    </ol>
+  </nav>
+{{- end -}}

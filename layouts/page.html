@@ -1,19 +1,26 @@
+{{/* Scrollspy for the table of contents */}}
+{{- define "body-attributes" -}}
+  {{- with .Fragments.Headings }} data-bs-spy="scroll" data-bs-target="#toc"{{ end -}}
+{{- end -}}
+
 {{ define "main" }}
-{{ $sidebar := partial "sidebar.html" . }}
+<article>
+  <header class="mb-4">
+    <h1 class="display-6">
+      <a href="{{ .Permalink }}" rel="bookmark" title="Permalink">{{ .Title }}</a>
+    </h1>
+    {{ partial "post-info.html" . }}
+  </header>
+
 <div class="row">
-  <article class="{{ if $sidebar }}col-lg-9{{ else }}col{{ end }}">
-    <header>
-      <h1>{{ .Title }}</h1>
-      {{ partial "post-info.html" . }}
-    </header>
-    {{ .Content }}
-  </article>
-  {{ with $sidebar }}
-  <aside class="col-lg-3 order-last">
-    <div class="elemental-sidebar">
-      {{ . }}
-    </div>
+  <aside class="elemental-sidebar col-lg-3">
+  {{ partial "contents.html" . }}
   </aside>
-  {{ end }}
+  <div class="col-lg-9">
+    <div class="reading-column">
+    {{ .Content }}
+    </div>
+  </div>
 </div>
+</article>
 {{ end }}

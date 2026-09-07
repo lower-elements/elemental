@@ -4,7 +4,7 @@
   {{ partial "head.html" . }}
   <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
 </head>
-<body class="d-flex min-vh-100 flex-column">
+<body class="d-flex min-vh-100 flex-column"{{- block "body-attributes" . }}{{- end -}}>
   <a class="visually-hidden-focusable" href="#main-content">{{ T "skip_to_content" }}</a>
   {{ partial "nav.html" . }}
 {{ $container := site.Params.elemental.container | default "container" }}
