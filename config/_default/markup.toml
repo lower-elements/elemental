@@ -1,0 +1,2 @@
+[goldmark.parser.attribute]
+  block = true
