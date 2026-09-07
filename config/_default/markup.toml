@@ -1,2 +1,5 @@
+[goldmark.parser]
+  wrapStandAloneImageWithinParagraph = false
+
 [goldmark.parser.attribute]
   block = true

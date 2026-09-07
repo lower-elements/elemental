@@ -1,0 +1,36 @@
+{{- $caption := .Attributes.caption -}}
+{{- $isFigure := and .IsBlock $caption -}}
+{{- $class := .Attributes.class -}}
+{{- $hasWidthUtility := gt (len (findRE `(^|\s)w-(25|50|75|100|auto)(\s|$)` $class)) 0 -}}
+
+{{- $baseClass := "img-fluid" -}}
+{{- if $isFigure -}}
+  {{- $baseClass = "figure-img img-fluid" -}}
+  {{- if not $hasWidthUtility }}{{ $baseClass = "figure-img img-fluid w-100" }}{{ end -}}
+{{- end -}}
+{{- if $class -}}
+  {{- $class = printf "%s %s" $baseClass $class -}}
+{{- else -}}
+  {{- $class = $baseClass -}}
+{{- end -}}
+
+{{- if $isFigure }}
+<figure class="figure d-block w-100">
+{{- end }}
+<img src="{{ .Destination | safeURL }}"
+  {{ with $class }}class="{{ . }}"{{ end }}
+  alt="{{ .PlainText }}"
+  {{ with .Title }}title="{{ . }}"{{ end }}
+  {{ with .Attributes.id }}id="{{ . }}"{{ end }}
+  {{ with .Attributes.width }}width="{{ . }}"{{ end }}
+  {{ with .Attributes.height }}height="{{ . }}"{{ end }}
+  {{ with .Attributes.srcset }}srcset="{{ . }}"{{ end }}
+  {{ with .Attributes.sizes }}sizes="{{ . }}"{{ end }}
+  {{ with .Attributes.loading }}loading="{{ . }}"{{ end }}
+  {{ with .Attributes.decoding }}decoding="{{ . }}"{{ end }}
+  {{ with .Attributes.fetchpriority }}fetchpriority="{{ . }}"{{ end }}
+>
+{{- if $isFigure }}
+  <figcaption class="figure-caption">{{ $caption | markdownify }}</figcaption>
+</figure>
+{{- end -}}
