@@ -25,6 +25,38 @@ html {
     overflow-x: auto;
 }
 
+.code-block .card-body {
+    min-width: 0;
+}
+
+.code-block .highlight,
+.code-block .highlight>pre {
+    margin: 0;
+}
+
+.code-block .highlight>pre {
+    overflow: visible;
+    padding: 1rem;
+}
+
+.code-block .highlight .lntd>pre {
+    margin: 0;
+    padding: 1rem;
+}
+
+.code-block .highlight>pre>code,
+.code-block .highlight .lntd:last-child code {
+    -webkit-user-select: all;
+    user-select: all;
+    cursor: copy;
+}
+
+.code-block-copy .bi {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+}
+
 @media (min-width: 992px) {
     .elemental-sidebar {
         position: sticky;

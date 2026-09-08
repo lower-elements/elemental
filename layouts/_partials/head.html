@@ -24,6 +24,9 @@
 {{- with resources.Get "elemental/js/color-mode.js" | fingerprint }}
 <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
 {{- end }}
+{{- with resources.Get "elemental/js/code-block.js" | minify | fingerprint }}
+<script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" defer></script>
+{{- end }}
 {{- range slice "elemental/bootstrap/bootstrap.min.css" "elemental/css/main.css" "elemental/css/syntax.css" }}
   {{- with resources.Get . | minify | fingerprint }}
 <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">

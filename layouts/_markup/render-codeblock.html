@@ -1,0 +1,39 @@
+{{- $kind := lower (default "code" .Attributes.kind) -}}
+{{- $copy := eq .Attributes.copy true -}}
+{{- $lineNos := lower (printf "%v" (default "" .Options.lineNos)) -}}
+{{- $label := .Type -}}
+{{- $showLabel := ne .Attributes.label false -}}
+{{- if eq (printf "%T" .Attributes.label) "string" -}}
+  {{- $label = .Attributes.label -}}
+{{- end -}}
+{{- $hasLabel := and $showLabel $label -}}
+{{- $hasHeader := or $hasLabel $copy -}}
+{{- $class := .Attributes.class -}}
+{{- $id := .Attributes.id -}}
+{{- $result := transform.HighlightCodeBlock . -}}
+{{- if and $copy (eq $lineNos "inline") -}}
+  {{- warnf "Code block %d in %s uses copy=true with inline line numbers; inline line numbers will be copied. Use lineNos=table or remove copy=true." (add .Ordinal 1) .Page.File.Path -}}
+{{- end -}}
+{{/* Annoying hack to remove our custom attributes from highlighted code HTML output, because Hugo doesn't let us delete from .Attributes */}}
+{{- $highlighted := replaceRE `^<div class="highlight[^>]*>` `<div class="highlight">` $result.Wrapped | safeHTML -}}
+{{- if eq $kind "samp" -}}
+  {{- $highlighted = replace (replace $highlighted "<code" "<samp") "</code>" "</samp>" | safeHTML -}}
+{{- end -}}
+<div class="card code-block my-4 overflow-hidden{{ with $class }} {{ . }}{{ end }}"{{ with $id }} id="{{ . }}"{{ end }}>
+  {{- if $hasHeader }}
+  <div class="card-header d-flex align-items-center gap-2">
+    {{- if $hasLabel }}
+    <span class="small font-monospace text-body-secondary">{{ $label }}</span>
+    {{- end }}
+    {{- if $copy }}
+    <button type="button" class="btn btn-sm btn-outline-secondary d-inline-flex align-items-center justify-content-center ms-auto code-block-copy" aria-label="Copy" title="Copy" hidden>
+      {{- with resources.Get "elemental/icons/copy.svg" }}{{ .Content | safeHTML }}{{ end }}
+    </button>
+    <span class="visually-hidden" data-copy-status aria-live="polite"></span>
+    {{- end }}
+  </div>
+  {{- end }}
+  <div class="card-body p-0">
+    {{ $highlighted }}
+  </div>
+</div>
