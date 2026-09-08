@@ -2,4 +2,10 @@
 {{- if findRE `^-?[0-9]` $anchor -}}
   {{- $anchor = printf "h-%s" $anchor -}}
 {{- end -}}
-<h{{ .Level }} id="{{ $anchor }}">{{ .Text }}</h{{ .Level }}>
+<h{{ .Level }} id="{{ $anchor }}"
+  {{- range $key, $value := .Attributes -}}
+    {{- if and $value (ne $key "id") -}}
+      {{- printf " %s=%q" $key $value | safeHTMLAttr -}}
+    {{- end -}}
+  {{- end -}}
+>{{ .Text }}</h{{ .Level }}>
