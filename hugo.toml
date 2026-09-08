@@ -6,7 +6,7 @@ min = "0.154.5"
 [markup]
   [markup.highlight]
     guessSyntax = true
-    lineNos = true
+    lineNos = false
     noClasses = false
 
 [params.author]
