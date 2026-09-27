@@ -17,4 +17,7 @@
 {{- with $profiles -}}
   {{- $result = merge $result (dict "profiles" .) -}}
 {{- end -}}
+{{- with $basics.location -}}
+  {{- $result = merge $result (dict "location" .) -}}
+{{- end -}}
 {{- return $result -}}
