@@ -12,3 +12,10 @@ min = "0.154.5"
 [params.author]
 name = "<author's name>"
 url = "https://example.com"
+
+[outputFormats.JSONResume]
+baseName = "resume"
+isPlainText = true
+mediaType = "application/json"
+permalinkable = true
+rel = "alternate"

@@ -1,0 +1,19 @@
+{{- $model := .model -}}
+{{- $highlights := slice -}}
+{{- range $model.highlights -}}
+  {{- $highlights = $highlights | append (partial "cv/json-resume/plain-text.html" (dict "page" $.page "value" .)) -}}
+{{- end -}}
+{{- $keywords := slice -}}
+{{- range $model.skills -}}
+  {{- $keywords = $keywords | append .name -}}
+{{- end -}}
+{{- $result := dict
+  "name" $model.project.name
+  "description" (partial "cv/json-resume/plain-text.html" (dict "page" .page "value" $model.project.description))
+  "highlights" $highlights
+  "keywords" $keywords
+-}}
+{{- with $model.primaryLink -}}
+  {{- $result = merge $result (dict "url" .url) -}}
+{{- end -}}
+{{- return $result -}}

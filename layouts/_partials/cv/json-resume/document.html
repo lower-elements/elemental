@@ -1,0 +1,40 @@
+{{- $page := .page -}}
+{{- $header := $page.Store.Get "elemental.cv.jsonresume.header" -}}
+{{- if not $header -}}
+  {{- errorf "The JSON Resume output for %s requires a cv/header shortcode" $page.RelPermalink -}}
+{{- end -}}
+{{- $projects := slice -}}
+{{- range $page.Store.Get "elemental.cv.jsonresume.projects" -}}
+  {{- $projects = $projects | append (partial "cv/json-resume/project.html" (dict "page" $page "model" .)) -}}
+{{- end -}}
+{{- $volunteer := slice -}}
+{{- range $entry := $page.Store.Get "elemental.cv.jsonresume.volunteer" -}}
+  {{- if eq $entry.kind "volunteer" -}}
+    {{- $volunteer = $volunteer | append (partial "cv/json-resume/volunteer.html" (dict "page" $page "model" $entry.model)) -}}
+  {{- else if eq $entry.kind "affiliation" -}}
+    {{- $volunteer = $volunteer | append (partial "cv/json-resume/affiliation.html" (dict "page" $page "model" $entry.model)) -}}
+  {{- else -}}
+    {{- errorf "Unknown CV volunteer model kind %q" $entry.kind -}}
+  {{- end -}}
+{{- end -}}
+{{- $education := slice -}}
+{{- range $page.Store.Get "elemental.cv.jsonresume.education" -}}
+  {{- $education = $education | append (partial "cv/json-resume/education.html" (dict "page" $page "model" .)) -}}
+{{- end -}}
+{{- $resume := dict
+  "$schema" "https://raw.githubusercontent.com/jsonresume/resume-schema/master/schema.json"
+  "basics" (partial "cv/json-resume/basics.html" (dict "page" $page "model" $header))
+-}}
+{{- with $projects -}}
+  {{- $resume = merge $resume (dict "projects" .) -}}
+{{- end -}}
+{{- with $volunteer -}}
+  {{- $resume = merge $resume (dict "volunteer" .) -}}
+{{- end -}}
+{{- with $education -}}
+  {{- $resume = merge $resume (dict "education" .) -}}
+{{- end -}}
+{{- with $page.OutputFormats.Get "jsonresume" -}}
+  {{- $resume = merge $resume (dict "meta" (dict "canonical" .Permalink)) -}}
+{{- end -}}
+{{- return $resume -}}

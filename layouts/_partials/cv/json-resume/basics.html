@@ -1,0 +1,20 @@
+{{- $model := .model -}}
+{{- $basics := $model.basics -}}
+{{- $profiles := slice -}}
+{{- range $basics.profiles -}}
+  {{- $profiles = $profiles | append (dict
+    "network" .name
+    "url" .url
+  ) -}}
+{{- end -}}
+{{- $result := dict
+  "name" $basics.name
+  "label" $basics.label
+  "image" $model.image.Permalink
+  "url" $basics.url
+  "summary" (partial "cv/json-resume/plain-text.html" (dict "page" .page "value" $basics.summary))
+-}}
+{{- with $profiles -}}
+  {{- $result = merge $result (dict "profiles" .) -}}
+{{- end -}}
+{{- return $result -}}

@@ -1,0 +1,7 @@
+{{- .Store.Set "elemental.cv.jsonresume.header" false -}}
+{{- .Store.Set "elemental.cv.jsonresume.projects" (slice) -}}
+{{- .Store.Set "elemental.cv.jsonresume.volunteer" (slice) -}}
+{{- .Store.Set "elemental.cv.jsonresume.education" (slice) -}}
+{{- $discard := .Content -}}
+{{- $resume := partial "cv/json-resume/document.html" (dict "page" .) -}}
+{{- transform.Remarshal "json" $resume -}}

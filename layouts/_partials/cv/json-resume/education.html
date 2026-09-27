@@ -1,0 +1,42 @@
+{{- $model := .model -}}
+{{- $education := $model.education -}}
+{{- $result := dict
+  "institution" $model.institution.name
+  "startDate" $education.date.start
+-}}
+{{- with $model.institution.url -}}
+  {{- $result = merge $result (dict "url" .) -}}
+{{- end -}}
+{{- with $education.date.end -}}
+  {{- $result = merge $result (dict "endDate" .) -}}
+{{- end -}}
+{{- with $education.study_type -}}
+  {{- $result = merge $result (dict "studyType" .) -}}
+{{- end -}}
+{{- with $education.area -}}
+  {{- $result = merge $result (dict "area" .) -}}
+{{- end -}}
+{{- with $education.result -}}
+  {{- $result = merge $result (dict "score" .) -}}
+{{- end -}}
+{{- with $education.results -}}
+  {{- $gradeOrder := $education.grade_order -}}
+  {{- if not $gradeOrder -}}
+    {{- errorf "CV education entry %q has results but no grade_order" $education.name -}}
+  {{- end -}}
+  {{- range $subjectResult := . -}}
+    {{- if not (in $gradeOrder $subjectResult.grade) -}}
+      {{- errorf "CV education entry %q uses grade %q, which is absent from grade_order" $education.name $subjectResult.grade -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $courses := slice -}}
+  {{- range $grade := $gradeOrder -}}
+    {{- range $subjectResult := $education.results -}}
+      {{- if eq $subjectResult.grade $grade -}}
+        {{- $courses = $courses | append (printf "%s — %s" $subjectResult.subject $subjectResult.grade) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $result = merge $result (dict "courses" $courses) -}}
+{{- end -}}
+{{- return $result -}}

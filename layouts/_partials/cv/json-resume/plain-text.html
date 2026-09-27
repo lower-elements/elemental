@@ -1,0 +1,2 @@
+{{- $rendered := .page.RenderString (dict "display" "inline") .value -}}
+{{- return ($rendered | plainify | htmlUnescape | strings.TrimSpace) -}}

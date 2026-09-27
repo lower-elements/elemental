@@ -1,0 +1,5 @@
+{{- $model := partial "cv/model/affiliation.html" . -}}
+{{- .Page.Store.Add "elemental.cv.jsonresume.volunteer" (slice (dict
+  "kind" "affiliation"
+  "model" $model
+)) -}}

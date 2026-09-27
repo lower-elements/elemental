@@ -1,0 +1,27 @@
+{{- $model := .model -}}
+{{- if not $model.roles -}}
+  {{- errorf "CV affiliation %q requires at least one selected role" $model.organization.name -}}
+{{- end -}}
+{{- $roleNames := slice -}}
+{{- range $model.roles -}}
+  {{- $roleNames = $roleNames | append .name -}}
+{{- end -}}
+{{- $firstRole := index $model.roles 0 -}}
+{{- $lastRole := index $model.roles (sub (len $model.roles) 1) -}}
+{{- $highlights := slice -}}
+{{- range $model.highlights -}}
+  {{- $highlights = $highlights | append (partial "cv/json-resume/plain-text.html" (dict "page" $.page "value" .)) -}}
+{{- end -}}
+{{- $result := dict
+  "organization" $model.organization.name
+  "position" (delimit $roleNames ", ")
+  "startDate" $firstRole.date.start
+  "highlights" $highlights
+-}}
+{{- with $model.organization.url -}}
+  {{- $result = merge $result (dict "url" .) -}}
+{{- end -}}
+{{- with $lastRole.date.end -}}
+  {{- $result = merge $result (dict "endDate" .) -}}
+{{- end -}}
+{{- return $result -}}

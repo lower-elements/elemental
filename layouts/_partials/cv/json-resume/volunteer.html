@@ -1,0 +1,19 @@
+{{- $model := .model -}}
+{{- $entry := $model.entry -}}
+{{- $highlights := slice -}}
+{{- range $model.highlights -}}
+  {{- $highlights = $highlights | append (partial "cv/json-resume/plain-text.html" (dict "page" $.page "value" .)) -}}
+{{- end -}}
+{{- $result := dict
+  "organization" $model.organization.name
+  "position" $entry.position
+  "startDate" $entry.date.start
+  "highlights" $highlights
+-}}
+{{- with $model.organization.url -}}
+  {{- $result = merge $result (dict "url" .) -}}
+{{- end -}}
+{{- with $entry.date.end -}}
+  {{- $result = merge $result (dict "endDate" .) -}}
+{{- end -}}
+{{- return $result -}}

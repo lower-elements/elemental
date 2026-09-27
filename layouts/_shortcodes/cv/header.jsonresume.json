@@ -1,0 +1,3 @@
+{{- $model := partial "cv/model/header.html" . -}}
+{{- .Page.Store.Set "elemental.cv.jsonresume.header" $model -}}
+{{- $discard := .InnerDeindent -}}
