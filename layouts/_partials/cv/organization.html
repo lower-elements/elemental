@@ -1,0 +1,6 @@
+{{- $organization := . -}}
+{{- with $organization.url -}}
+  <a class="cv-organization-link p-name p-org u-url" href="{{ . }}">{{ $organization.name }}</a>
+{{- else -}}
+  <span class="p-name p-org">{{ $organization.name }}</span>
+{{- end -}}

@@ -5,7 +5,7 @@
 <div class="col cv-entry p-education h-event">
   <h3 class="h5 p-name">{{ .education.name }}</h3>
   <p{{ if .education.result }} class="mb-0"{{ end }}>
-    <span class="p-location h-card"><span class="p-name p-org">{{ $institution.name }}</span></span><br>
+    <span class="p-location h-card">{{ partial "cv/organization.html" $institution }}</span><br>
     <span class="text-body-secondary">{{ partial "cv/date.html" (dict
       "date" .education.date
       "style" .dateStyle

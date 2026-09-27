@@ -3,7 +3,7 @@
   {{- errorf "CV affiliation refers to missing organization %q. See %s" .affiliation.organization_id .position -}}
 {{- end -}}
 <div class="col cv-entry p-affiliation h-card">
-  <h3 class="h5 p-name p-org">{{ $organization.name }}</h3>
+  <h3 class="h5">{{ partial "cv/organization.html" $organization }}</h3>
 
   <dl class="row">
     {{- range $roleID := .roleIDs -}}
