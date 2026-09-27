@@ -1,1 +1,5 @@
-{{- partial "cv/header.html" (dict "page" .Page "cv" .Page.Site.Data.cv) -}}
+{{- partial "cv/header.html" (dict
+  "page" .Page
+  "cv" .Page.Site.Data.cv
+  "content" (.InnerDeindent | strings.TrimSpace)
+) -}}

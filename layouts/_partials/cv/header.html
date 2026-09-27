@@ -25,7 +25,7 @@
     </div>
 
     <p class="lead p-summary">{{ $basics.summary }}</p>
-    {{- with $basics.notes }}
+    {{- with .content }}
       <div class="cv-notes">{{ $.page.RenderString (dict "display" "block") . }}</div>
     {{- end }}
   </div>
