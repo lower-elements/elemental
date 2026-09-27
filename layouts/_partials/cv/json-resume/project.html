@@ -16,4 +16,12 @@
 {{- with $model.primaryLink -}}
   {{- $result = merge $result (dict "url" .url) -}}
 {{- end -}}
+{{- with $model.project.date -}}
+  {{- with .start -}}
+    {{- $result = merge $result (dict "startDate" .) -}}
+  {{- end -}}
+  {{- with .end -}}
+    {{- $result = merge $result (dict "endDate" .) -}}
+  {{- end -}}
+{{- end -}}
 {{- return $result -}}
