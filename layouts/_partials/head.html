@@ -37,6 +37,16 @@
 <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
   {{- end }}
 {{- end }}
+{{- range .Param "stylesheets" }}
+  {{- $path := . }}
+  {{- with resources.Get $path }}
+    {{- with . | minify | fingerprint }}
+<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
+    {{- end }}
+  {{- else }}
+    {{- warnf "Page stylesheet %q configured by %s was not found in assets" $path $.RelPermalink }}
+  {{- end }}
+{{- end }}
 {{- with resources.Get "elemental/bootstrap/bootstrap.bundle.min.js" | fingerprint }}
 <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" defer></script>
 {{- end }}
