@@ -2,6 +2,7 @@
 <html lang="{{ .Language.Lang }}">
 <head>
   {{ partial "head.html" . }}
+  {{ block "head" . }}{{ end }}
   <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
 </head>
 <body class="d-flex min-vh-100 flex-column"{{- block "body-attributes" . }}{{- end -}}>
