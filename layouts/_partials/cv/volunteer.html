@@ -2,10 +2,16 @@
 {{- if not $organization -}}
   {{- errorf "CV volunteer entry refers to missing organization %q. See %s" .entry.organization_id .position -}}
 {{- end -}}
-<div class="col cv-entry">
-  <h3 class="h5">{{ $organization.name }}</h3>
-  <p>{{ .entry.position }}<br>
-    <span class="text-body-secondary">{{ partial "cv/date.html" (dict "date" .entry.date "style" .dateStyle "position" .position) }}</span>
+<div class="col cv-entry p-experience h-event">
+  <h3 class="h5 p-location h-card"><span class="p-name p-org">{{ $organization.name }}</span></h3>
+  <p><span class="p-name">{{ .entry.position }}</span><br>
+    <span class="text-body-secondary">{{ partial "cv/date.html" (dict
+      "date" .entry.date
+      "style" .dateStyle
+      "position" .position
+      "startClass" "dt-start"
+      "endClass" "dt-end"
+    ) }}</span>
   </p>
   {{- partial "cv/highlights.html" (dict
     "page" .page
@@ -13,5 +19,6 @@
     "highlights" .entry.highlights
     "highlightIDs" .highlightIDs
     "position" .position
+    "listClass" "p-summary"
   ) -}}
 </div>

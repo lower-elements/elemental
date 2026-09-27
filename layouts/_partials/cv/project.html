@@ -18,7 +18,7 @@
       {{- if not $skill -}}
         {{- errorf "CV project %q refers to missing skill %q. See %s" $.project.name $skillID $.position -}}
       {{- end -}}
-      {{- $skill.name -}}
+      <span class="p-skill">{{ $skill.name }}</span>
     {{- end -}}
   </small>
 

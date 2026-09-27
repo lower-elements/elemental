@@ -2,6 +2,8 @@
 {{- $style := .style -}}
 {{- $start := $date.start -}}
 {{- $end := $date.end -}}
+{{- $startClass := .startClass -}}
+{{- $endClass := .endClass -}}
 {{- if not $start -}}
   {{- errorf "CV dates require a start value. See %s" .position -}}
 {{- end -}}
@@ -26,37 +28,37 @@
   {{- if lt (len $start) 7 -}}
     {{- errorf "CV date style %q requires at least month precision, but start is %q. See %s" $style $start .position -}}
   {{- end -}}
-  <time datetime="{{ $start }}">
+  <time{{ with $startClass }} class="{{ . }}"{{ end }} datetime="{{ $start }}">
     {{- time.Format "January 2006" $startForFormatting -}}
   </time>
   {{- with $end -}}
-    <data value="{{ . }}"></data>
+    <data{{ with $endClass }} class="{{ . }}"{{ end }} value="{{ . }}"></data>
   {{- end }}
 {{- else if eq $style "year" -}}
-  <time datetime="{{ $start }}">
+  <time{{ with $startClass }} class="{{ . }}"{{ end }} datetime="{{ $start }}">
     {{- time.Format "2006" $startForFormatting -}}
   </time>
   {{- with $end -}}
-    <data value="{{ . }}"></data>
+    <data{{ with $endClass }} class="{{ . }}"{{ end }} value="{{ . }}"></data>
   {{- end }}
 {{- else if eq $style "month_range" -}}
   {{- if or (lt (len $start) 7) (and $end (lt (len $end) 7)) -}}
     {{- errorf "CV date style %q requires at least month precision, but received %q to %q. See %s" $style $start $end .position -}}
   {{- end -}}
-  <time datetime="{{ $start }}">
+  <time{{ with $startClass }} class="{{ . }}"{{ end }} datetime="{{ $start }}">
     {{- time.Format "January 2006" $startForFormatting -}}
   </time>
   {{- with $end -}}
-    –<time datetime="{{ . }}">
+    –<time{{ with $endClass }} class="{{ . }}"{{ end }} datetime="{{ . }}">
       {{- time.Format "January 2006" $endForFormatting -}}
     </time>
   {{- end }}
 {{- else if eq $style "year_range" -}}
-  <time datetime="{{ $start }}">
+  <time{{ with $startClass }} class="{{ . }}"{{ end }} datetime="{{ $start }}">
     {{- time.Format "2006" $startForFormatting -}}
   </time>
   {{- with $end -}}
-    –<time datetime="{{ . }}">
+    –<time{{ with $endClass }} class="{{ . }}"{{ end }} datetime="{{ . }}">
       {{- time.Format "2006" $endForFormatting -}}
     </time>
   {{- end }}
@@ -64,11 +66,11 @@
   {{- if or (lt (len $start) 10) (and $end (lt (len $end) 10)) -}}
     {{- errorf "CV date style %q requires day precision, but received %q to %q. See %s" $style $start $end .position -}}
   {{- end -}}
-  <time datetime="{{ $start }}">
+  <time{{ with $startClass }} class="{{ . }}"{{ end }} datetime="{{ $start }}">
     {{- time.Format "2 January 2006" $startForFormatting -}}
   </time>
   {{- with $end -}}
-    –<time datetime="{{ . }}">
+    –<time{{ with $endClass }} class="{{ . }}"{{ end }} datetime="{{ . }}">
       {{- time.Format "2 January 2006" $endForFormatting -}}
     </time>
   {{- end }}

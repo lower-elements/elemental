@@ -2,14 +2,20 @@
 {{- if not $institution -}}
   {{- errorf "CV education entry refers to missing institution %q. See %s" .education.institution_id .position -}}
 {{- end -}}
-<div class="col cv-entry">
-  <h3 class="h5">{{ .education.name }}</h3>
+<div class="col cv-entry p-education h-event">
+  <h3 class="h5 p-name">{{ .education.name }}</h3>
   <p{{ if .education.result }} class="mb-0"{{ end }}>
-    {{ $institution.name }}<br>
-    <span class="text-body-secondary">{{ partial "cv/date.html" (dict "date" .education.date "style" .dateStyle "position" .position) }}</span>
+    <span class="p-location h-card"><span class="p-name p-org">{{ $institution.name }}</span></span><br>
+    <span class="text-body-secondary">{{ partial "cv/date.html" (dict
+      "date" .education.date
+      "style" .dateStyle
+      "position" .position
+      "startClass" "dt-start"
+      "endClass" "dt-end"
+    ) }}</span>
   </p>
   {{- with .education.result }}
-    <p class="fw-semibold text-primary">{{ . }}</p>
+    <p class="fw-semibold text-primary p-summary">{{ . }}</p>
   {{- end }}
   {{- with .education.results }}
     {{- $gradeOrder := $.education.grade_order -}}
@@ -21,7 +27,7 @@
         {{- errorf "CV education entry %q uses grade %q, which is absent from grade_order. See %s" $.education.name $result.grade $.position -}}
       {{- end -}}
     {{- end -}}
-    <dl class="row">
+    <dl class="row p-summary">
       {{- range $grade := $gradeOrder -}}
         {{- $subjects := slice -}}
         {{- range $result := $.education.results -}}

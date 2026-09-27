@@ -11,17 +11,19 @@
     <img src="{{ $image.RelPermalink }}" width="{{ $image.Width }}" height="{{ $image.Height }}" alt="{{ $basics.image.alt }}" class="img-fluid w-100">
   </div>
   <div class="col-md-10">
-    <h1 class="display-6">{{ $basics.name }}</h1>
-    <h2 class="h3">{{ $basics.label }}</h2>
+    <div class="p-contact h-card">
+      <h1 class="display-6 p-name">{{ $basics.name }}</h1>
+      <h2 class="h3 p-role">{{ $basics.label }}</h2>
 
-    <ul class="list-inline">
-      <li class="list-inline-item"><a href="{{ $basics.url }}">{{ $basics.url_label }}</a></li>
-      {{- range $basics.profiles }}
-        <li class="list-inline-item"><a href="{{ .url }}">{{ .label }}</a></li>
-      {{- end }}
-    </ul>
+      <ul class="list-inline">
+        <li class="list-inline-item"><a class="u-url u-uid" href="{{ $basics.url }}">{{ $basics.url_label }}</a></li>
+        {{- range $basics.profiles }}
+          <li class="list-inline-item"><a class="u-url" rel="me" href="{{ .url }}">{{ .label }}</a></li>
+        {{- end }}
+      </ul>
+    </div>
 
-    <p class="lead">{{ $basics.summary }}</p>
+    <p class="lead p-summary">{{ $basics.summary }}</p>
     {{- with $basics.notes }}
       <div class="cv-notes">{{ $.page.RenderString (dict "display" "block") . }}</div>
     {{- end }}
