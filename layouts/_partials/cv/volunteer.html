@@ -1,0 +1,17 @@
+{{- $organization := index .cv.organizations .entry.organization_id -}}
+{{- if not $organization -}}
+  {{- errorf "CV volunteer entry refers to missing organization %q. See %s" .entry.organization_id .position -}}
+{{- end -}}
+<div class="col cv-entry">
+  <h3 class="h5">{{ $organization.name }}</h3>
+  <p>{{ .entry.position }}<br>
+    <span class="text-body-secondary">{{ partial "cv/date.html" (dict "date" .entry.date "style" .dateStyle "position" .position) }}</span>
+  </p>
+  {{- partial "cv/highlights.html" (dict
+    "page" .page
+    "owner" $organization.name
+    "highlights" .entry.highlights
+    "highlightIDs" .highlightIDs
+    "position" .position
+  ) -}}
+</div>

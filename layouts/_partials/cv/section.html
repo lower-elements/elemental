@@ -1,0 +1,10 @@
+{{- $classes := slice "cv-section" -}}
+{{- with .class -}}
+  {{- $classes = $classes | append . -}}
+{{- end -}}
+<section aria-labelledby="{{ .id }}-heading" class="{{ delimit $classes " " }}">
+  <h2 id="{{ .id }}-heading" class="h4">{{ .title }}</h2>
+  <div class="row row-cols-1 row-cols-md-{{ .columns }}">
+    {{- .content -}}
+  </div>
+</section>

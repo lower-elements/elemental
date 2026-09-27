@@ -3,6 +3,14 @@
     margin: 12mm;
 }
 
+.cv-notes {
+    margin-bottom: 1rem;
+}
+
+.cv-notes > :last-child {
+    margin-bottom: 0;
+}
+
 @media print {
     html,
     body {
@@ -133,6 +141,10 @@
         margin-bottom: 1.75mm;
         font-size: 11.5pt;
         font-weight: 400;
+    }
+
+    .cv-notes {
+        margin-bottom: 1.75mm;
     }
 
     .list-inline {

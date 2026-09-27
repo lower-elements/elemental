@@ -1,0 +1,8 @@
+{{- $resource := .page.Resources.Get .name -}}
+{{- if not $resource -}}
+  {{- $resource = resources.Get .name -}}
+{{- end -}}
+{{- if not $resource -}}
+  {{- errorf "Resource %q was not found as a page or global resource for %s" .name .page.RelPermalink -}}
+{{- end -}}
+{{- return $resource -}}

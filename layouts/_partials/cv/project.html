@@ -1,0 +1,35 @@
+{{- $primaryLink := false -}}
+{{- range .project.links -}}
+  {{- if .primary -}}
+    {{- $primaryLink = . -}}
+  {{- end -}}
+{{- end -}}
+<div class="col cv-entry">
+  <h3 class="h5">{{ .project.name }}</h3>
+
+  {{- with $primaryLink }}
+    <a href="{{ .url }}">{{ .label }}</a>
+    &ndash;
+  {{- end }}
+  <small class="text-body-secondary">
+    {{- range $index, $skillID := $.project.skill_ids -}}
+      {{- if $index }} &middot; {{ end -}}
+      {{- $skill := index $.cv.skills $skillID -}}
+      {{- if not $skill -}}
+        {{- errorf "CV project %q refers to missing skill %q. See %s" $.project.name $skillID $.position -}}
+      {{- end -}}
+      {{- $skill.name -}}
+    {{- end -}}
+  </small>
+
+  <p>{{ .project.description }}</p>
+
+  <h4 class="h6">Skills</h4>
+  {{- partial "cv/highlights.html" (dict
+    "page" .page
+    "owner" .project.name
+    "highlights" .project.highlights
+    "highlightIDs" .highlightIDs
+    "position" .position
+  ) -}}
+</div>

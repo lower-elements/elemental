@@ -1,0 +1,26 @@
+{{- $organization := index .cv.organizations .affiliation.organization_id -}}
+{{- if not $organization -}}
+  {{- errorf "CV affiliation refers to missing organization %q. See %s" .affiliation.organization_id .position -}}
+{{- end -}}
+<div class="col cv-entry">
+  <h3 class="h5">{{ $organization.name }}</h3>
+
+  <dl class="row">
+    {{- range $roleID := .roleIDs -}}
+      {{- $role := index $.affiliation.roles $roleID -}}
+      {{- if not $role -}}
+        {{- errorf "CV affiliation %q has no role %q. See %s" $organization.name $roleID $.position -}}
+      {{- end -}}
+      <dt class="col-sm-6">{{ $role.name }}</dt>
+      <dd class="col-sm-6">{{ partial "cv/date.html" (dict "date" $role.date "style" $.dateStyle "position" $.position) }}</dd>
+    {{- end }}
+  </dl>
+
+  {{- partial "cv/highlights.html" (dict
+    "page" .page
+    "owner" $organization.name
+    "highlights" .affiliation.highlights
+    "highlightIDs" .highlightIDs
+    "position" .position
+  ) -}}
+</div>

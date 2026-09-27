@@ -1,0 +1,77 @@
+{{- $date := .date -}}
+{{- $style := .style -}}
+{{- $start := $date.start -}}
+{{- $end := $date.end -}}
+{{- if not $start -}}
+  {{- errorf "CV dates require a start value. See %s" .position -}}
+{{- end -}}
+{{/* Hugo cannot parse reduced-precision ISO dates, so pad formatting copies only. */}}
+{{- $startForFormatting := $start -}}
+{{- if eq (len $start) 4 -}}
+  {{- $startForFormatting = printf "%s-01-01" $start -}}
+{{- else if eq (len $start) 7 -}}
+  {{- $startForFormatting = printf "%s-01" $start -}}
+{{- end -}}
+{{- $endForFormatting := $end -}}
+{{- with $end -}}
+  {{- if eq (len .) 4 -}}
+    {{- $endForFormatting = printf "%s-01-01" . -}}
+  {{- else if eq (len .) 7 -}}
+    {{- $endForFormatting = printf "%s-01" . -}}
+  {{- end -}}
+{{- end -}}
+{{/* Keep the original values in datetime/value; presentation never changes their precision. */}}
+{{/* Single-value styles hide the end in data; range styles display two time elements. */}}
+{{- if eq $style "month" -}}
+  {{- if lt (len $start) 7 -}}
+    {{- errorf "CV date style %q requires at least month precision, but start is %q. See %s" $style $start .position -}}
+  {{- end -}}
+  <time datetime="{{ $start }}">
+    {{- time.Format "January 2006" $startForFormatting -}}
+  </time>
+  {{- with $end -}}
+    <data value="{{ . }}"></data>
+  {{- end }}
+{{- else if eq $style "year" -}}
+  <time datetime="{{ $start }}">
+    {{- time.Format "2006" $startForFormatting -}}
+  </time>
+  {{- with $end -}}
+    <data value="{{ . }}"></data>
+  {{- end }}
+{{- else if eq $style "month_range" -}}
+  {{- if or (lt (len $start) 7) (and $end (lt (len $end) 7)) -}}
+    {{- errorf "CV date style %q requires at least month precision, but received %q to %q. See %s" $style $start $end .position -}}
+  {{- end -}}
+  <time datetime="{{ $start }}">
+    {{- time.Format "January 2006" $startForFormatting -}}
+  </time>
+  {{- with $end -}}
+    –<time datetime="{{ . }}">
+      {{- time.Format "January 2006" $endForFormatting -}}
+    </time>
+  {{- end }}
+{{- else if eq $style "year_range" -}}
+  <time datetime="{{ $start }}">
+    {{- time.Format "2006" $startForFormatting -}}
+  </time>
+  {{- with $end -}}
+    –<time datetime="{{ . }}">
+      {{- time.Format "2006" $endForFormatting -}}
+    </time>
+  {{- end }}
+{{- else if eq $style "full_range" -}}
+  {{- if or (lt (len $start) 10) (and $end (lt (len $end) 10)) -}}
+    {{- errorf "CV date style %q requires day precision, but received %q to %q. See %s" $style $start $end .position -}}
+  {{- end -}}
+  <time datetime="{{ $start }}">
+    {{- time.Format "2 January 2006" $startForFormatting -}}
+  </time>
+  {{- with $end -}}
+    –<time datetime="{{ . }}">
+      {{- time.Format "2 January 2006" $endForFormatting -}}
+    </time>
+  {{- end }}
+{{- else -}}
+  {{- errorf "Unknown CV date presentation style %q. Expected month, year, month_range, year_range, or full_range. See %s" $style .position -}}
+{{- end -}}

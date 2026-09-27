@@ -1,0 +1,19 @@
+{{- $id := .Get "id" -}}
+{{- $title := .Get "title" -}}
+{{- if not $id -}}
+  {{- errorf "The %q shortcode requires an 'id' argument. See %s" .Name .Position -}}
+{{- end -}}
+{{- if not $title -}}
+  {{- errorf "The %q shortcode requires a 'title' argument. See %s" .Name .Position -}}
+{{- end -}}
+{{- $columns := int (.Get "columns" | default 1) -}}
+{{- if or (lt $columns 1) (gt $columns 6) -}}
+  {{- errorf "The %q shortcode's 'columns' argument must be between 1 and 6. See %s" .Name .Position -}}
+{{- end -}}
+{{- partial "cv/section.html" (dict
+  "id" $id
+  "title" $title
+  "columns" $columns
+  "class" (.Get "class")
+  "content" .Inner
+) -}}
