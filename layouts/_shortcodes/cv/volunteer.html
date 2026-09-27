@@ -1,20 +1,7 @@
-{{- $id := .Get "id" -}}
-{{- if not $id -}}
-  {{- errorf "The %q shortcode requires an 'id' argument. See %s" .Name .Position -}}
-{{- end -}}
-{{- $entry := index .Page.Site.Data.cv.volunteer $id -}}
-{{- if not $entry -}}
-  {{- errorf "The %q shortcode could not find volunteer entry %q in data/cv.yaml. See %s" .Name $id .Position -}}
-{{- end -}}
-{{- $highlightIDs := $entry.default_highlights -}}
-{{- with .Get "highlights" -}}
-  {{- $highlightIDs = split . " " -}}
-{{- end -}}
+{{- $model := partial "cv/model/volunteer.html" . -}}
 {{- partial "cv/volunteer.html" (dict
   "page" .Page
-  "cv" .Page.Site.Data.cv
-  "entry" $entry
-  "highlightIDs" $highlightIDs
+  "model" $model
   "dateStyle" (.Get "date-style" | default "full_range")
   "position" .Position
 ) -}}

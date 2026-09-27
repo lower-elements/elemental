@@ -1,0 +1,18 @@
+{{- $id := .Get "id" -}}
+{{- if not $id -}}
+  {{- errorf "The %q shortcode requires an 'id' argument. See %s" .Name .Position -}}
+{{- end -}}
+{{- $cv := .Page.Site.Data.cv -}}
+{{- $education := index $cv.education $id -}}
+{{- if not $education -}}
+  {{- errorf "The %q shortcode could not find education entry %q in data/cv.yaml. See %s" .Name $id .Position -}}
+{{- end -}}
+{{- $institution := index $cv.organizations $education.institution_id -}}
+{{- if not $institution -}}
+  {{- errorf "CV education entry refers to missing institution %q. See %s" $education.institution_id .Position -}}
+{{- end -}}
+{{- return (dict
+  "id" $id
+  "education" $education
+  "institution" $institution
+) -}}

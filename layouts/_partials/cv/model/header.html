@@ -1,0 +1,12 @@
+{{- $basics := .Page.Site.Data.cv.basics -}}
+{{- $image := partial "resources/get.html" (dict
+  "page" .Page
+  "name" $basics.image.resource
+) -}}
+{{- if not (reflect.IsImageResource $image) -}}
+  {{- errorf "CV resource %q is not an image for %s" $basics.image.resource .Page.RelPermalink -}}
+{{- end -}}
+{{- return (dict
+  "basics" $basics
+  "image" $image
+) -}}

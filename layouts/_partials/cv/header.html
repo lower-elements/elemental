@@ -1,11 +1,5 @@
-{{- $basics := .cv.basics -}}
-{{- $image := partial "resources/get.html" (dict
-  "page" .page
-  "name" $basics.image.resource
-) -}}
-{{- if not (reflect.IsImageResource $image) -}}
-  {{- errorf "CV resource %q is not an image for %s" $basics.image.resource .page.RelPermalink -}}
-{{- end -}}
+{{- $basics := .model.basics -}}
+{{- $image := .model.image -}}
 <header class="row mb-2">
   <div class="col-md-2">
     <img src="{{ $image.RelPermalink }}" width="{{ $image.Width }}" height="{{ $image.Height }}" alt="{{ $basics.image.alt }}" class="img-fluid w-100">

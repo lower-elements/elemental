@@ -1,19 +1,5 @@
-{{- $id := .Get "id" -}}
-{{- if not $id -}}
-  {{- errorf "The %q shortcode requires an 'id' argument. See %s" .Name .Position -}}
-{{- end -}}
-{{- $project := index .Page.Site.Data.cv.projects $id -}}
-{{- if not $project -}}
-  {{- errorf "The %q shortcode could not find project %q in data/cv.yaml. See %s" .Name $id .Position -}}
-{{- end -}}
-{{- $highlightIDs := $project.default_highlights -}}
-{{- with .Get "highlights" -}}
-  {{- $highlightIDs = split . " " -}}
-{{- end -}}
+{{- $model := partial "cv/model/project.html" . -}}
 {{- partial "cv/project.html" (dict
   "page" .Page
-  "cv" .Page.Site.Data.cv
-  "project" $project
-  "highlightIDs" $highlightIDs
-  "position" .Position
+  "model" $model
 ) -}}

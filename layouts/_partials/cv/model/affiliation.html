@@ -1,0 +1,43 @@
+{{- $id := .Get "id" -}}
+{{- if not $id -}}
+  {{- errorf "The %q shortcode requires an 'id' argument. See %s" .Name .Position -}}
+{{- end -}}
+{{- $cv := .Page.Site.Data.cv -}}
+{{- $affiliation := index $cv.affiliations $id -}}
+{{- if not $affiliation -}}
+  {{- errorf "The %q shortcode could not find affiliation %q in data/cv.yaml. See %s" .Name $id .Position -}}
+{{- end -}}
+{{- $organization := index $cv.organizations $affiliation.organization_id -}}
+{{- if not $organization -}}
+  {{- errorf "CV affiliation refers to missing organization %q. See %s" $affiliation.organization_id .Position -}}
+{{- end -}}
+{{- $roleIDs := $affiliation.role_order -}}
+{{- with .Get "roles" -}}
+  {{- $roleIDs = split . " " -}}
+{{- end -}}
+{{- $roles := slice -}}
+{{- range $roleID := $roleIDs -}}
+  {{- $role := index $affiliation.roles $roleID -}}
+  {{- if not $role -}}
+    {{- errorf "CV affiliation %q has no role %q. See %s" $organization.name $roleID $.Position -}}
+  {{- end -}}
+  {{- $roles = $roles | append (dict
+    "id" $roleID
+    "name" $role.name
+    "date" $role.date
+  ) -}}
+{{- end -}}
+{{- $highlights := partial "cv/model/highlights.html" (dict
+  "owner" $organization.name
+  "highlights" $affiliation.highlights
+  "defaultIDs" $affiliation.default_highlights
+  "requestedIDs" (.Get "highlights")
+  "position" .Position
+) -}}
+{{- return (dict
+  "id" $id
+  "affiliation" $affiliation
+  "organization" $organization
+  "roles" $roles
+  "highlights" $highlights
+) -}}

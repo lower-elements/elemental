@@ -1,36 +1,34 @@
-{{- $institution := index .cv.organizations .education.institution_id -}}
-{{- if not $institution -}}
-  {{- errorf "CV education entry refers to missing institution %q. See %s" .education.institution_id .position -}}
-{{- end -}}
+{{- $education := .model.education -}}
+{{- $institution := .model.institution -}}
 <div class="col cv-entry p-education h-event">
-  <h3 class="h5 p-name">{{ .education.name }}</h3>
-  <p{{ if .education.result }} class="mb-0"{{ end }}>
+  <h3 class="h5 p-name">{{ $education.name }}</h3>
+  <p{{ if $education.result }} class="mb-0"{{ end }}>
     <span class="p-location h-card">{{ partial "cv/organization.html" $institution }}</span><br>
     <span class="text-body-secondary">{{ partial "cv/date.html" (dict
-      "date" .education.date
+      "date" $education.date
       "style" .dateStyle
       "position" .position
       "startClass" "dt-start"
       "endClass" "dt-end"
     ) }}</span>
   </p>
-  {{- with .education.result }}
+  {{- with $education.result }}
     <p class="fw-semibold text-primary p-summary">{{ . }}</p>
   {{- end }}
-  {{- with .education.results }}
-    {{- $gradeOrder := $.education.grade_order -}}
+  {{- with $education.results }}
+    {{- $gradeOrder := $education.grade_order -}}
     {{- if not $gradeOrder -}}
-      {{- errorf "CV education entry %q has results but no grade_order. See %s" $.education.name $.position -}}
+      {{- errorf "CV education entry %q has results but no grade_order. See %s" $education.name $.position -}}
     {{- end -}}
     {{- range $result := . -}}
       {{- if not (in $gradeOrder $result.grade) -}}
-        {{- errorf "CV education entry %q uses grade %q, which is absent from grade_order. See %s" $.education.name $result.grade $.position -}}
+        {{- errorf "CV education entry %q uses grade %q, which is absent from grade_order. See %s" $education.name $result.grade $.position -}}
       {{- end -}}
     {{- end -}}
     <dl class="row p-summary">
       {{- range $grade := $gradeOrder -}}
         {{- $subjects := slice -}}
-        {{- range $result := $.education.results -}}
+        {{- range $result := $education.results -}}
           {{- if eq $result.grade $grade -}}
             {{- $subjects = $subjects | append $result.subject -}}
           {{- end -}}

@@ -1,9 +1,5 @@
 <ul{{ with .listClass }} class="{{ . }}"{{ end }}>
-  {{- range $highlightID := .highlightIDs -}}
-    {{- $highlight := index $.highlights $highlightID -}}
-    {{- if not $highlight -}}
-      {{- errorf "CV entry %q has no highlight %q. See %s" $.owner $highlightID $.position -}}
-    {{- end }}
+  {{- range $highlight := .highlights }}
     <li{{ with $.itemClass }} class="{{ . }}"{{ end }}>{{ $.page.RenderString (dict "display" "inline") $highlight }}</li>
   {{- end }}
 </ul>

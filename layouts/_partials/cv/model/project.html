@@ -1,0 +1,37 @@
+{{- $id := .Get "id" -}}
+{{- if not $id -}}
+  {{- errorf "The %q shortcode requires an 'id' argument. See %s" .Name .Position -}}
+{{- end -}}
+{{- $cv := .Page.Site.Data.cv -}}
+{{- $project := index $cv.projects $id -}}
+{{- if not $project -}}
+  {{- errorf "The %q shortcode could not find project %q in data/cv.yaml. See %s" .Name $id .Position -}}
+{{- end -}}
+{{- $highlights := partial "cv/model/highlights.html" (dict
+  "owner" $project.name
+  "highlights" $project.highlights
+  "defaultIDs" $project.default_highlights
+  "requestedIDs" (.Get "highlights")
+  "position" .Position
+) -}}
+{{- $skills := slice -}}
+{{- range $skillID := $project.skill_ids -}}
+  {{- $skill := index $cv.skills $skillID -}}
+  {{- if not $skill -}}
+    {{- errorf "CV project %q refers to missing skill %q. See %s" $project.name $skillID $.Position -}}
+  {{- end -}}
+  {{- $skills = $skills | append (dict "id" $skillID "name" $skill.name) -}}
+{{- end -}}
+{{- $primaryLink := false -}}
+{{- range $project.links -}}
+  {{- if .primary -}}
+    {{- $primaryLink = . -}}
+  {{- end -}}
+{{- end -}}
+{{- return (dict
+  "id" $id
+  "project" $project
+  "primaryLink" $primaryLink
+  "skills" $skills
+  "highlights" $highlights
+) -}}

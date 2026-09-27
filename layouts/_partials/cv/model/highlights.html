@@ -1,0 +1,13 @@
+{{- $highlightIDs := .defaultIDs -}}
+{{- with .requestedIDs -}}
+  {{- $highlightIDs = split . " " -}}
+{{- end -}}
+{{- $resolved := slice -}}
+{{- range $highlightID := $highlightIDs -}}
+  {{- $highlight := index $.highlights $highlightID -}}
+  {{- if not $highlight -}}
+    {{- errorf "CV entry %q has no highlight %q. See %s" $.owner $highlightID $.position -}}
+  {{- end -}}
+  {{- $resolved = $resolved | append $highlight -}}
+{{- end -}}
+{{- return $resolved -}}

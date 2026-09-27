@@ -1,14 +1,6 @@
-{{- $id := .Get "id" -}}
-{{- if not $id -}}
-  {{- errorf "The %q shortcode requires an 'id' argument. See %s" .Name .Position -}}
-{{- end -}}
-{{- $education := index .Page.Site.Data.cv.education $id -}}
-{{- if not $education -}}
-  {{- errorf "The %q shortcode could not find education entry %q in data/cv.yaml. See %s" .Name $id .Position -}}
-{{- end -}}
+{{- $model := partial "cv/model/education.html" . -}}
 {{- partial "cv/education.html" (dict
-  "cv" .Page.Site.Data.cv
-  "education" $education
+  "model" $model
   "dateStyle" (.Get "date-style" | default "year_range")
   "position" .Position
 ) -}}

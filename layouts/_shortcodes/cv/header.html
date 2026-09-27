@@ -1,5 +1,6 @@
+{{- $model := partial "cv/model/header.html" . -}}
 {{- partial "cv/header.html" (dict
   "page" .Page
-  "cv" .Page.Site.Data.cv
+  "model" $model
   "content" (.InnerDeindent | strings.TrimSpace)
 ) -}}
