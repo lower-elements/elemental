@@ -1,0 +1,11 @@
+{{- define "head" -}}
+  {{- with resources.Get "elemental/css/cv.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
+  {{- end }}
+{{- end -}}
+
+{{- define "main" -}}
+<article class="cv">
+  {{ .Content }}
+</article>
+{{- end -}}
