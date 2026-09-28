@@ -6,6 +6,16 @@ html {
     max-width: 50rem;
 }
 
+.identity-featured-photo .u-photo {
+    object-position: center top;
+}
+
+@media (min-width: 768px) {
+    .identity-featured-photo {
+        --bs-aspect-ratio: 100%;
+    }
+}
+
 .content {
     max-width: 1140px;
 }

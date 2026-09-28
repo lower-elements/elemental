@@ -1,0 +1,45 @@
+{{- $identity := dict -}}
+{{- $id := .Get "id" -}}
+{{- $index := .Get "index" -}}
+{{- $hasID := false -}}
+{{- $hasIndex := false -}}
+{{- if .IsNamedParams -}}
+  {{- $hasID = isset .Params "id" -}}
+  {{- $hasIndex = isset .Params "index" -}}
+{{- end -}}
+{{- if $hasID -}}
+  {{- if $hasIndex -}}
+    {{- errorf "The %q shortcode cannot use both 'id' and 'index'. See %s" .Name .Position -}}
+  {{- end -}}
+  {{- $identity = partial "identity/resolve-id.html" (dict
+    "site" .Page.Site
+    "id" $id
+    "position" .Position
+  ) -}}
+{{- else -}}
+  {{- $authors := partial "identity/resolve-authors.html" (dict "page" .Page) -}}
+  {{- if eq (len $authors) 0 -}}
+    {{- errorf "The %q shortcode could not resolve an identity. See %s" .Name .Position -}}
+  {{- else if and (gt (len $authors) 1) (not $hasIndex) -}}
+    {{- errorf "The %q shortcode resolved %d identities; set 'index' to choose one. See %s" .Name (len $authors) .Position -}}
+  {{- else -}}
+    {{- $authorIndex := 0 -}}
+    {{- if $hasIndex -}}
+      {{- $authorIndex = int $index -}}
+    {{- end -}}
+    {{- if or (lt $authorIndex 0) (ge $authorIndex (len $authors)) -}}
+      {{- errorf "The %q shortcode index %d is outside the %d resolved identities. See %s" .Name $authorIndex (len $authors) .Position -}}
+    {{- else -}}
+      {{- $identity = index $authors $authorIndex -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- with $identity -}}
+  {{- partial "identity/featured.html" (dict
+    "identity" .
+    "page" $.Page
+    "headingLevel" ($.Get "headingLevel" | default 2)
+    "headingClass" ($.Get "headingClass" | default "h2")
+  ) -}}
+{{- end -}}

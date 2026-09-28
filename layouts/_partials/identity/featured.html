@@ -1,0 +1,114 @@
+{{- $identity := .identity -}}
+{{- $page := .page -}}
+{{- $headingLevel := int (.headingLevel | default 2) -}}
+{{- $headingClass := .headingClass | default "h2" -}}
+{{- if or (lt $headingLevel 1) (gt $headingLevel 6) -}}
+  {{- errorf "The identity/featured heading level must be between 1 and 6. See %s" $page.RelPermalink -}}
+{{- end -}}
+{{- $effectiveName := $identity.name | default $identity.nickname -}}
+{{- if not $effectiveName -}}
+  {{- errorf "The identity/featured view requires an identity with a name or nickname. See %s" $page.RelPermalink -}}
+{{- end -}}
+{{- $nameClasses := printf "card-title p-name %s" $headingClass -}}
+{{- if not $identity.name -}}
+  {{- $nameClasses = printf "%s p-nickname" $nameClasses -}}
+{{- end -}}
+{{- if eq $identity.kind "organisation" -}}
+  {{- $nameClasses = printf "%s p-org" $nameClasses -}}
+{{- end -}}
+
+{{- $photoURL := $identity.photo -}}
+{{- $photoPosition := "" -}}
+{{- with $identity.photo_position -}}
+  {{- $photoPosition = strings.TrimSpace (printf "%v" .) -}}
+  {{- /* Only accept X/Y keywords or percentages before marking the inline CSS safe. */ -}}
+  {{- if not (findRE `^(left|center|right|([0-9]{1,2}|100)%)[[:space:]]+(top|center|bottom|([0-9]{1,2}|100)%)$` $photoPosition 1) -}}
+    {{- errorf "Invalid identity photo_position %q; use two positions, each a keyword or whole-number percentage. See %s" $photoPosition $page.RelPermalink -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $canonicalURL := $identity.url | default "" -}}
+{{- $samePageURL := false -}}
+{{- with $canonicalURL -}}
+  {{- /* An authored URL may omit the trailing slash Hugo adds to permalinks. */ -}}
+  {{- $samePageURL = eq (strings.TrimSuffix "/" .) (strings.TrimSuffix "/" $page.Permalink) -}}
+{{- end -}}
+
+{{- $displayLinks := slice -}}
+{{- if and $canonicalURL (not $samePageURL) -}}
+  {{- $label := $canonicalURL -}}
+  {{- $url := urls.Parse $canonicalURL -}}
+  {{- if in (slice "http" "https") (lower $url.Scheme) -}}
+    {{- $label = strings.TrimPrefix (printf "%s://" $url.Scheme) $label -}}
+    {{- $label = strings.TrimSuffix "/" $label -}}
+  {{- end -}}
+  {{- $displayLinks = $displayLinks | append (dict
+    "url" $canonicalURL
+    "label" $label
+    "property" "u-url u-uid"
+  ) -}}
+{{- end -}}
+{{- range $identity.links -}}
+  {{- $link := . -}}
+  {{- with $link.url -}}
+    {{- if ne (strings.TrimSuffix "/" .) (strings.TrimSuffix "/" $canonicalURL) -}}
+      {{- $property := "u-url" -}}
+      {{- $label := $link.label | default . -}}
+      {{- if eq (lower (urls.Parse .).Scheme) "mailto" -}}
+        {{- $property = "u-email" -}}
+        {{- if not $link.label -}}
+          {{- $label = strings.TrimPrefix "mailto:" . -}}
+        {{- end -}}
+      {{- end -}}
+      {{- $displayLinks = $displayLinks | append (dict
+        "url" .
+        "label" $label
+        "property" $property
+        "rel" $link.rel
+      ) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+<article class="card mb-3 overflow-hidden h-card">
+  {{- if $samePageURL }}
+  <data class="u-url u-uid" value="{{ $canonicalURL }}" hidden></data>
+  {{- end }}
+  <div class="row g-0">
+    {{- with $photoURL }}
+    <div class="col-md-3">
+      <div class="ratio ratio-16x9 identity-featured-photo">
+        <img class="object-fit-cover u-photo" src="{{ . }}" alt="{{ $identity.photo_alt | default $effectiveName }}"{{ with $photoPosition }} style="{{ printf "object-position: %s" . | safeCSS }}"{{ end }}>
+      </div>
+    </div>
+    {{- end }}
+    <div class="col-md">
+      <div class="card-body">
+        {{ printf "<h%d class=%q>" $headingLevel $nameClasses | safeHTML }}{{ $effectiveName }}{{ printf "</h%d>" $headingLevel | safeHTML }}
+        {{- if $identity.name }}
+          {{- with $identity.nickname }}
+        <p class="card-subtitle mb-2 text-body-secondary p-nickname">{{ . }}</p>
+          {{- end }}
+        {{- end }}
+        {{- with $displayLinks }}
+        <ul class="list-inline mb-2">
+          {{- range . }}
+          <li class="list-inline-item">
+            <a
+              class="{{ .property }}"
+              href="{{ .url }}"
+              {{- with .rel }}
+              rel="{{ . }}"
+              {{- end -}}
+            >{{ .label }}</a>
+          </li>
+          {{- end }}
+        </ul>
+        {{- end }}
+        {{- with $identity.note }}
+        <p class="card-text p-note">{{ . }}</p>
+        {{- end }}
+      </div>
+    </div>
+  </div>
+</article>
