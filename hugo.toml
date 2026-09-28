@@ -13,6 +13,9 @@ min = "0.154.5"
 name = "<author's name>"
 url = "https://example.com"
 
+[params.elemental]
+visibleAlternativeFormats = ["rss"]
+
 [outputFormats.JSONResume]
 baseName = "resume"
 isPlainText = true

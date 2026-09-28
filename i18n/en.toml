@@ -86,8 +86,8 @@ other = "Inactive"
 [alternative_formats]
 other = "Alternative page formats"
 
-[rss_feed]
-other = "RSS feed"
+[alternative_format_rss]
+other = "RSS"
 
 [site_code_license]
 other = "Site code: AGPL-3.0-only"

@@ -1,5 +1,19 @@
-{{ with  .OutputFormats.Get "rss" -}}
+{{- $formats := slice }}
+{{- $visibleFormats := site.Params.elemental.visibleAlternativeFormats }}
+{{- range .AlternativeOutputFormats }}
+  {{- if in $visibleFormats (lower .Name) }}
+    {{- $formats = $formats | append . }}
+  {{- end }}
+{{- end }}
+{{- with $formats }}
 <nav aria-label="{{ T `alternative_formats` }}">
-    <a href="{{ .Permalink }}">{{ T "rss_feed" }}</a>
+  <ul class="list-inline mb-0">
+    {{- range . }}
+    {{- $label := T (printf "alternative_format_%s" (lower .Name)) | default .Name }}
+    <li class="list-inline-item">
+      <a href="{{ .Permalink }}" rel="alternate" type="{{ .MediaType.Type }}">{{ $label }}</a>
+    </li>
+    {{- end }}
+  </ul>
 </nav>
 {{- end }}
