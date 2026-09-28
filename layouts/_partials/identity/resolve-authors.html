@@ -5,7 +5,9 @@
 {{- end -}}
 
 {{- $candidates := slice -}}
+{{- $hasAuthorSource := false -}}
 {{- with $page.Params.author -}}
+  {{- $hasAuthorSource = true -}}
   {{- $ids := slice . -}}
   {{- if reflect.IsSlice . -}}
     {{- $ids = . -}}
@@ -18,7 +20,19 @@
     ) -}}
     {{- $candidates = $candidates | append $identity -}}
   {{- end -}}
-{{- else -}}
+{{- end -}}
+
+{{- if and (not $hasAuthorSource) (isset $page.Site.Taxonomies "authors") -}}
+  {{- with $page.GetTerms "authors" -}}
+    {{- $hasAuthorSource = true -}}
+    {{- range . -}}
+      {{- $identity := partial "identity/from-page.html" (dict "page" .) -}}
+      {{- $candidates = $candidates | append $identity -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if not $hasAuthorSource -}}
   {{- with partial "identity/from-site.html" (dict "site" $page.Site) -}}
     {{- $candidates = $candidates | append . -}}
   {{- end -}}
@@ -26,12 +40,7 @@
 
 {{- $authors := slice -}}
 {{- range $candidates -}}
-  {{- $isOrganisation := .organisation | default false -}}
-  {{- if or
-    (not $kind)
-    (and (eq $kind "person") (not $isOrganisation))
-    (and (eq $kind "organisation") $isOrganisation)
-  -}}
+  {{- if or (not $kind) (eq $kind .kind) -}}
     {{- $authors = $authors | append . -}}
   {{- end -}}
 {{- end -}}
