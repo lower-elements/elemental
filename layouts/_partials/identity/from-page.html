@@ -1,0 +1,25 @@
+{{- $page := .page -}}
+{{- $person := $page.Params.person | default dict -}}
+{{- /*
+Merge the normalized fields last so explicitly empty person values still fall
+back to the page metadata. Merging $person over a defaults dictionary would let
+empty name, note, and URL values erase those useful defaults.
+*/ -}}
+{{- $identity := merge $person (dict
+  "kind" ($person.kind | default "person")
+  "name" ($person.name | default $page.Title)
+  "note" ($person.note | default $page.Description)
+  "url" ($person.url | default $page.Permalink)
+  "sourcePage" $page
+) -}}
+
+{{- with $person.photo | default "photo" -}}
+  {{- with $page.Resources.Get . -}}
+    {{- $identity = merge $identity (dict
+      "photo" .RelPermalink
+      "photo_resource" .
+    ) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- return $identity -}}
