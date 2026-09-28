@@ -1,8 +1,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-{{- with .Site.Params.author.name }}
-<meta name="author" content="{{ . }}">
-{{- end }}
+{{- $authors := partial "identity/resolve-authors.html" (dict "page" .) }}
+{{- partial "identity/head.html" (dict "authors" $authors) }}
 {{- with .Param "tags" }}
 <meta name="keywords" content="{{ delimit . `, ` }}">
 {{- end }}

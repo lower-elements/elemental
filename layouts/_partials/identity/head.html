@@ -1,0 +1,9 @@
+{{- range .authors }}
+  {{- $name := .name -}}
+  {{- with $name }}
+<meta name="author" content="{{ . }}">
+  {{- end }}
+  {{- with .url }}
+<link rel="author" href="{{ . }}"{{ with $name }} title="{{ . }}"{{ end }}>
+  {{- end }}
+{{- end -}}
