@@ -1,0 +1,14 @@
+{{- $site := .site -}}
+{{- $identity := dict -}}
+{{- with $site.Params.author -}}
+  {{- $identity = merge (dict "kind" "person" "url" $site.Home.Permalink) . -}}
+  {{- with .photo -}}
+    {{- with resources.Get . -}}
+      {{- $identity = merge $identity (dict
+        "photo" .RelPermalink
+        "photo_resource" .
+      ) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $identity -}}

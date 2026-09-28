@@ -9,9 +9,6 @@ min = "0.154.5"
     lineNos = false
     noClasses = false
 
-[params.author]
-name = "<author's name>"
-url = "https://example.com"
 
 [params.elemental]
 visibleAlternativeFormats = ["rss"]
