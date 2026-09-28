@@ -1,0 +1,18 @@
+{{- $page := .page -}}
+{{- $kind := .kind | default "" -}}
+{{- if and $kind (not (in (slice "person" "organisation") $kind)) -}}
+  {{- errorf "Unknown identity kind %q while resolving authors for %s" $kind $page.RelPermalink -}}
+{{- end -}}
+
+{{- $authors := slice -}}
+{{- with partial "identity/from-site.html" (dict "site" $page.Site) -}}
+  {{- $isOrganisation := .organisation | default false -}}
+  {{- if or
+    (not $kind)
+    (and (eq $kind "person") (not $isOrganisation))
+    (and (eq $kind "organisation") $isOrganisation)
+  -}}
+    {{- $authors = $authors | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- return $authors -}}
