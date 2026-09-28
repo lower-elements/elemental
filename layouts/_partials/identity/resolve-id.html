@@ -1,0 +1,24 @@
+{{- $site := .site -}}
+{{- $id := strings.TrimSpace (printf "%v" .id) -}}
+{{- $position := .position | default "site configuration" -}}
+{{- $identity := dict -}}
+
+{{- if not $id -}}
+  {{- errorf "Cannot resolve an identity with an empty ID. See %s" $position -}}
+{{- else -}}
+  {{- $people := index $site.Data "people" | default dict -}}
+  {{- $organisations := index $site.Data "organisations" | default dict -}}
+  {{- $isPerson := isset $people $id -}}
+  {{- $isOrganisation := isset $organisations $id -}}
+  {{- if and $isPerson $isOrganisation -}}
+    {{- errorf "Identity ID %q is ambiguous because it exists in both data/people and data/organisations. See %s" $id $position -}}
+  {{- else if $isPerson -}}
+    {{- $identity = partial "identity/from-data.html" (dict "id" $id "kind" "person" "data" (index $people $id)) -}}
+  {{- else if $isOrganisation -}}
+    {{- $identity = partial "identity/from-data.html" (dict "id" $id "kind" "organisation" "data" (index $organisations $id)) -}}
+  {{- else -}}
+    {{- errorf "Identity %q was not found in data/people or data/organisations. See %s" $id $position -}}
+  {{- end -}}
+{{- end -}}
+
+{{- return $identity -}}
