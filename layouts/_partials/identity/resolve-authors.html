@@ -4,8 +4,28 @@
   {{- errorf "Unknown identity kind %q while resolving authors for %s" $kind $page.RelPermalink -}}
 {{- end -}}
 
+{{- $candidates := slice -}}
+{{- with $page.Params.author -}}
+  {{- $ids := slice . -}}
+  {{- if reflect.IsSlice . -}}
+    {{- $ids = . -}}
+  {{- end -}}
+  {{- range $ids -}}
+    {{- $identity := partial "identity/resolve-id.html" (dict
+      "site" $page.Site
+      "id" .
+      "position" $page.RelPermalink
+    ) -}}
+    {{- $candidates = $candidates | append $identity -}}
+  {{- end -}}
+{{- else -}}
+  {{- with partial "identity/from-site.html" (dict "site" $page.Site) -}}
+    {{- $candidates = $candidates | append . -}}
+  {{- end -}}
+{{- end -}}
+
 {{- $authors := slice -}}
-{{- with partial "identity/from-site.html" (dict "site" $page.Site) -}}
+{{- range $candidates -}}
   {{- $isOrganisation := .organisation | default false -}}
   {{- if or
     (not $kind)
