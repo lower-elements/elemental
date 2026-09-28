@@ -1,17 +1,23 @@
 {{- define "contents-items" -}}
   {{- range . -}}
-    {{- $id := .ID -}}
-    {{- if findRE `^-?[0-9]` $id -}}
-      {{- $id = printf "h-%s" $id -}}
-    {{- end -}}
-    <li class="nav-item">
-      <a class="nav-link" href="#{{ $id }}">{{ .Title }}</a>
+    {{- if and .ID .Title -}}
+      {{- $id := .ID -}}
+      {{- if findRE `^-?[0-9]` $id -}}
+        {{- $id = printf "h-%s" $id -}}
+      {{- end -}}
+      <li class="nav-item">
+        <a class="nav-link" href="#{{ $id }}">{{ .Title }}</a>
+        {{- with .Headings }}
+          <ol class="nav flex-column ms-3">
+            {{- template "contents-items" . -}}
+          </ol>
+        {{- end }}
+      </li>
+    {{- else -}}
       {{- with .Headings }}
-        <ol class="nav flex-column ms-3">
-          {{- template "contents-items" . -}}
-        </ol>
+        {{- template "contents-items" . -}}
       {{- end }}
-    </li>
+    {{- end -}}
   {{- end -}}
 {{- end -}}
 
