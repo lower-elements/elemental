@@ -1,10 +1,11 @@
 <div class="small text-body-secondary">
-  <time datetime="{{ .Date.Format "2006-01-02" }}">{{ T "published_on" (.Date | time.Format ":date_long") }}</time>
-  <span aria-hidden="true"> · </span>{{ T "reading_time" (dict "count" .ReadingTime) }}
+  <div class="d-flex flex-wrap align-items-baseline column-gap-3 row-gap-1">
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ T "published_on" (.Date | time.Format ":date_long") }}</time>
+    <span>{{ T "reading_time" (dict "count" .ReadingTime) }}</span>
+  </div>
   {{- with .Param "tags" }}
-  <nav aria-label="{{ T `post_tags` }}">
-    {{- range $index, $tag := sort . }}
-      {{- if gt $index 0 }} <span aria-hidden="true"> · </span> {{ end -}}
+  <nav class="d-flex flex-wrap align-items-baseline column-gap-3 row-gap-1" aria-label="{{ T `post_tags` }}">
+    {{- range $tag := sort . }}
       {{- with $.Site.GetPage (printf "/tags/%s" ($tag | urlize)) }}
       <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
       {{- end }}
