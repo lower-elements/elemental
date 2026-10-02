@@ -16,4 +16,7 @@
 {{- with $entry.date.end -}}
   {{- $result = merge $result (dict "endDate" .) -}}
 {{- end -}}
+{{- with $entry.summary -}}
+  {{- $result = merge $result (dict "summary" (partial "cv/json-resume/plain-text.html" (dict "page" $.page "value" .))) -}}
+{{- end -}}
 {{- return $result -}}
