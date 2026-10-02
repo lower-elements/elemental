@@ -1,0 +1,26 @@
+{{- $model := .model -}}
+{{- $person := $model.person -}}
+{{- $result := dict "name" $person.name -}}
+{{- with $model.entry.reference -}}
+  {{- $result = merge $result (dict "reference" (partial "cv/json-resume/plain-text.html" (dict "page" $.page "value" .))) -}}
+{{- end -}}
+{{- with $person.job_title -}}
+  {{- $result = merge $result (dict "position" .) -}}
+{{- end -}}
+{{- with $model.organisation -}}
+  {{- $result = merge $result (dict "organization" .name) -}}
+{{- end -}}
+{{- with $model.entry.relationship -}}
+  {{- $result = merge $result (dict "relationship" .) -}}
+{{- end -}}
+{{- with $person.location -}}
+  {{- $result = merge $result (dict "location" .) -}}
+{{- end -}}
+{{- range $model.contacts -}}
+  {{- $field := .kind -}}
+  {{- if eq $field "website" -}}{{- $field = "url" -}}{{- end -}}
+  {{- if not (isset $result $field) -}}
+    {{- $result = merge $result (dict $field .value) -}}
+  {{- end -}}
+{{- end -}}
+{{- return $result -}}

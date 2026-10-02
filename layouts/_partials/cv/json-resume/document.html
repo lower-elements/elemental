@@ -25,6 +25,10 @@
 {{- range $page.Store.Get "elemental.cv.jsonresume.education" -}}
   {{- $education = $education | append (partial "cv/json-resume/education.html" (dict "page" $page "model" .)) -}}
 {{- end -}}
+{{- $references := slice -}}
+{{- range $page.Store.Get "elemental.cv.jsonresume.references" -}}
+  {{- $references = $references | append (partial "cv/json-resume/reference.html" (dict "page" $page "model" .)) -}}
+{{- end -}}
 {{- $resume := dict
   "$schema" "https://raw.githubusercontent.com/jsonresume/resume-schema/master/schema.json"
   "basics" (partial "cv/json-resume/basics.html" (dict "page" $page "model" $header))
@@ -40,6 +44,9 @@
 {{- end -}}
 {{- with $education -}}
   {{- $resume = merge $resume (dict "education" .) -}}
+{{- end -}}
+{{- with $references -}}
+  {{- $resume = merge $resume (dict "references" .) -}}
 {{- end -}}
 {{- with $page.OutputFormats.Get "jsonresume" -}}
   {{- $resume = merge $resume (dict "meta" (dict "canonical" .Permalink)) -}}

@@ -58,3 +58,16 @@ h-resume has no standard referee relationship; these cards are not p-contact.
 Real referee identities, CV reference data and employer-facing compositions belong
 in private/local build inputs. Do not commit their contact details to a public
 repository. Private generated HTML, JSON and PDF must also remain unpublished.
+
+## JSON Resume
+
+The same shortcode selections populate the JSON Resume references array, in authored
+order. Only name and optional reference (the written recommendation) are standard
+reference fields. The adapter adds optional position, organization, relationship,
+email, phone, url and location as schema-permitted extensions; consumers may ignore
+these extensions. Recommendations are converted to plain text.
+
+JSON uses the first email, telephone and website in the resolved contact list. Email
+and phone values come from contact URIs, not display labels. HTML retains all contact
+links. A canonical identity url takes precedence over other website links. Omitted
+fields and an unused references collection are not exported.
