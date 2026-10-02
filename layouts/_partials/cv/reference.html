@@ -1,0 +1,35 @@
+{{- $model := .model -}}
+{{- $person := $model.person -}}
+<div class="col cv-entry h-card">
+  <h3 class="h5 p-name">{{ $person.name }}</h3>
+  {{- if or $person.job_title $model.organisation }}
+  <p class="h6">
+    {{- with $person.job_title }}<span class="p-job-title">{{ . }}</span>{{ end -}}
+    {{- if and $person.job_title $model.organisation }} – {{ end -}}
+    {{- with $model.organisation }}
+      {{- with .url }}<a class="p-org h-card" href="{{ . }}">{{ $model.organisation.name }}</a>
+      {{- else }}<span class="p-org">{{ .name }}</span>{{ end -}}
+    {{- end }}
+  </p>
+  {{- end }}
+  {{- with $model.entry.relationship }}<p>{{ . }}</p>{{ end }}
+  {{- if or $model.contacts $person.location }}
+  <ul class="list-unstyled">
+    {{- range $model.contacts }}
+    <li>{{ partial "icon.html" .icon }} <span class="visually-hidden">{{ .typeLabel }}: </span><a class="{{ .property }}" href="{{ .url }}">{{ .label }}</a></li>
+    {{- end }}
+    {{- with $person.location }}
+    <li>{{ partial "icon.html" "geo-alt-fill" }} <span class="visually-hidden">Address: </span><span class="p-adr h-adr">
+      {{- with .address }}<span class="p-street-address">{{ range $i, $line := split . "\n" }}{{ if $i }}<br>{{ end }}{{ $line }}{{ end }}</span><br>{{ end -}}
+      {{- with .city }}<span class="p-locality">{{ . }}</span><br>{{ end -}}
+      {{- with .region }}<span class="p-region">{{ . }}</span><br>{{ end -}}
+      {{- with .postalCode }}<span class="p-postal-code">{{ . }}</span><br>{{ end -}}
+      {{- with .countryCode }}<span>{{ . }}</span>{{ end -}}
+    </span></li>
+    {{- end }}
+  </ul>
+  {{- end }}
+  {{- with $model.entry.reference }}
+  <blockquote class="mb-2">{{ $.page.RenderString (dict "display" "block") . }}</blockquote>
+  {{- end }}
+</div>

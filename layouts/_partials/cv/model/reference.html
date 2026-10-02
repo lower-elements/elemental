@@ -1,0 +1,53 @@
+{{- $id := .Get "id" -}}
+{{- if not $id -}}
+  {{- errorf "The %q shortcode requires an 'id' argument. See %s" .Name .Position -}}
+{{- end -}}
+{{- $entry := index .Page.Site.Data.cv.references $id -}}
+{{- if not $entry -}}
+  {{- errorf "The %q shortcode could not find reference entry %q in data/cv.yaml. See %s" .Name $id .Position -}}
+{{- end -}}
+{{- if not $entry.person_id -}}
+  {{- errorf "CV reference %q requires a person_id. See %s" $id .Position -}}
+{{- end -}}
+{{- $person := partial "identity/resolve-id.html" (dict "site" .Page.Site "id" $entry.person_id "position" .Position) -}}
+{{- if or (ne $person.kind "person") (not $person.name) -}}
+  {{- errorf "CV reference %q requires a person identity with a name. See %s" $id .Position -}}
+{{- end -}}
+{{- $organisation := dict -}}
+{{- with $person.organisation_id -}}
+  {{- $organisation = partial "identity/resolve-id.html" (dict "site" $.Page.Site "id" . "position" $.Position) -}}
+  {{- if or (ne $organisation.kind "organisation") (not $organisation.name) -}}
+    {{- errorf "CV reference %q requires a named organisation identity for organisation_id. See %s" $id $.Position -}}
+  {{- end -}}
+{{- end -}}
+{{- $contacts := slice -}}
+{{- with $person.url -}}
+  {{- $contacts = $contacts | append (dict "url" . "label" . "value" . "kind" "website" "property" "u-url" "icon" "globe" "typeLabel" "Website") -}}
+{{- end -}}
+{{- range $link := $person.links -}}
+  {{- with .url -}}
+    {{- if ne . $person.url -}}
+      {{- $parsed := urls.Parse . -}}
+      {{- $kind := "website" -}}
+      {{- $property := "u-url" -}}
+      {{- $icon := "globe" -}}
+      {{- $typeLabel := "Website" -}}
+      {{- $value := . -}}
+      {{- if eq (lower $parsed.Scheme) "mailto" -}}
+        {{- $kind = "email" -}}
+        {{- $property = "u-email" -}}
+        {{- $icon = "envelope-fill" -}}
+        {{- $typeLabel = "Email" -}}
+        {{- $value = $parsed.Opaque -}}
+      {{- else if eq (lower $parsed.Scheme) "tel" -}}
+        {{- $kind = "phone" -}}
+        {{- $property = "p-tel" -}}
+        {{- $icon = "telephone-fill" -}}
+        {{- $typeLabel = "Telephone" -}}
+        {{- $value = $parsed.Opaque -}}
+      {{- end -}}
+      {{- $contacts = $contacts | append (dict "url" . "label" ($link.label | default $value) "value" $value "kind" $kind "property" $property "icon" $icon "typeLabel" $typeLabel) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return (dict "id" $id "entry" $entry "person" $person "organisation" $organisation "contacts" $contacts) -}}
