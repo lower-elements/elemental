@@ -1,0 +1,2 @@
+{{- $model := partial "cv/model/work.html" . -}}
+{{- .Page.Store.Add "elemental.cv.jsonresume.work" (slice $model) -}}

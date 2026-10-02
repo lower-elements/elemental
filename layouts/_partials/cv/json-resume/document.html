@@ -3,6 +3,10 @@
 {{- if not $header -}}
   {{- errorf "The JSON Resume output for %s requires a cv/header shortcode" $page.RelPermalink -}}
 {{- end -}}
+{{- $work := slice -}}
+{{- range $page.Store.Get "elemental.cv.jsonresume.work" -}}
+  {{- $work = $work | append (partial "cv/json-resume/work.html" (dict "page" $page "model" .)) -}}
+{{- end -}}
 {{- $projects := slice -}}
 {{- range $page.Store.Get "elemental.cv.jsonresume.projects" -}}
   {{- $projects = $projects | append (partial "cv/json-resume/project.html" (dict "page" $page "model" .)) -}}
@@ -25,6 +29,9 @@
   "$schema" "https://raw.githubusercontent.com/jsonresume/resume-schema/master/schema.json"
   "basics" (partial "cv/json-resume/basics.html" (dict "page" $page "model" $header))
 -}}
+{{- with $work -}}
+  {{- $resume = merge $resume (dict "work" .) -}}
+{{- end -}}
 {{- with $projects -}}
   {{- $resume = merge $resume (dict "projects" .) -}}
 {{- end -}}

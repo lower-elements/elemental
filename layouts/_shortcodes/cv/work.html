@@ -1,0 +1,7 @@
+{{- $model := partial "cv/model/work.html" . -}}
+{{- partial "cv/work.html" (dict
+  "page" .Page
+  "model" $model
+  "dateStyle" (.Get "date-style" | default "month_range")
+  "position" .Position
+) -}}
