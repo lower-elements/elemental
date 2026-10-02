@@ -67,6 +67,7 @@
     }
 
     .cv > header,
+    .cv-section-row,
     .cv-section,
     .cv-entry {
         page-break-inside: avoid;
