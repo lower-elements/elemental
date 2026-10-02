@@ -16,10 +16,10 @@
   {{- if or $model.contacts $person.location }}
   <ul class="list-unstyled">
     {{- range $model.contacts }}
-    <li>{{ partial "icon.html" .icon }} <span class="visually-hidden">{{ .typeLabel }}: </span><a class="{{ .property }}" href="{{ .url }}">{{ .label }}</a></li>
+    <li class="d-flex gap-1"><span class="flex-shrink-0">{{ partial "icon.html" .icon }}</span> <span class="visually-hidden">{{ .typeLabel }}: </span><a class="{{ .property }} text-break" href="{{ .url }}">{{ .label }}</a></li>
     {{- end }}
     {{- with $person.location }}
-    <li>{{ partial "icon.html" "geo-alt-fill" }} <span class="visually-hidden">Address: </span><span class="p-adr h-adr">
+    <li class="d-flex gap-1"><span class="flex-shrink-0">{{ partial "icon.html" "geo-alt-fill" }}</span> <span class="visually-hidden">Address: </span><span class="p-adr h-adr">
       {{- with .address }}<span class="p-street-address">{{ range $i, $line := split . "\n" }}{{ if $i }}<br>{{ end }}{{ $line }}{{ end }}</span><br>{{ end -}}
       {{- with .city }}<span class="p-locality">{{ . }}</span><br>{{ end -}}
       {{- with .region }}<span class="p-region">{{ . }}</span><br>{{ end -}}
