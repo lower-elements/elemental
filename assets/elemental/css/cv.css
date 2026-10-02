@@ -32,7 +32,8 @@
         padding: 0 !important;
     }
 
-    #main-content .row {
+    /* Keep Bootstrap gutter utilities in control when explicitly supplied. */
+    :where(.cv) .row:not(:where([class*="g-"], [class*="gx-"])) {
         --bs-gutter-x: 5mm;
     }
 
@@ -44,6 +45,15 @@
     .cv > header > .col-md-10 {
         flex: 0 0 auto;
         width: 83.333333%;
+    }
+
+    /* Preserve section-level Bootstrap columns independently of screen breakpoints. */
+    .cv-section-row > .col-md-4 {
+        width: 33.333333%;
+    }
+
+    .cv-section-row > .col-md-8 {
+        width: 66.666667%;
     }
 
     .cv-section > .row.row-cols-md-2 > .col {
