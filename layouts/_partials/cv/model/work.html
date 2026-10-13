@@ -7,10 +7,11 @@
 {{- if not $entry -}}
   {{- errorf "The %q shortcode could not find work entry %q in data/cv.yaml. See %s" .Name $id .Position -}}
 {{- end -}}
-{{- $organization := index $cv.organizations $entry.organization_id -}}
-{{- if not $organization -}}
-  {{- errorf "CV work entry refers to missing organization %q. See %s" $entry.organization_id .Position -}}
-{{- end -}}
+{{- $organization := partial "identity/resolve-organisation.html" (dict
+  "site" .Page.Site
+  "id" $entry.organization_id
+  "position" .Position
+) -}}
 {{- if not $entry.position -}}
   {{- errorf "CV work entry %q requires a position. See %s" $id .Position -}}
 {{- end -}}

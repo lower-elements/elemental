@@ -15,10 +15,7 @@
 {{- end -}}
 {{- $organisation := dict -}}
 {{- with $person.organisation_id -}}
-  {{- $organisation = partial "identity/resolve-id.html" (dict "site" $.Page.Site "id" . "position" $.Position) -}}
-  {{- if or (ne $organisation.kind "organisation") (not $organisation.name) -}}
-    {{- errorf "CV reference %q requires a named organisation identity for organisation_id. See %s" $id $.Position -}}
-  {{- end -}}
+  {{- $organisation = partial "identity/resolve-organisation.html" (dict "site" $.Page.Site "id" . "position" $.Position) -}}
 {{- end -}}
 {{- $contacts := slice -}}
 {{- with $person.url -}}

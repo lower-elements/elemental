@@ -7,10 +7,11 @@
 {{- if not $affiliation -}}
   {{- errorf "The %q shortcode could not find affiliation %q in data/cv.yaml. See %s" .Name $id .Position -}}
 {{- end -}}
-{{- $organization := index $cv.organizations $affiliation.organization_id -}}
-{{- if not $organization -}}
-  {{- errorf "CV affiliation refers to missing organization %q. See %s" $affiliation.organization_id .Position -}}
-{{- end -}}
+{{- $organization := partial "identity/resolve-organisation.html" (dict
+  "site" .Page.Site
+  "id" $affiliation.organization_id
+  "position" .Position
+) -}}
 {{- $roleIDs := $affiliation.role_order -}}
 {{- with .Get "roles" -}}
   {{- $roleIDs = split . " " -}}

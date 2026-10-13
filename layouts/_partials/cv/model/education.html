@@ -7,10 +7,11 @@
 {{- if not $education -}}
   {{- errorf "The %q shortcode could not find education entry %q in data/cv.yaml. See %s" .Name $id .Position -}}
 {{- end -}}
-{{- $institution := index $cv.organizations $education.institution_id -}}
-{{- if not $institution -}}
-  {{- errorf "CV education entry refers to missing institution %q. See %s" $education.institution_id .Position -}}
-{{- end -}}
+{{- $institution := partial "identity/resolve-organisation.html" (dict
+  "site" .Page.Site
+  "id" $education.institution_id
+  "position" .Position
+) -}}
 {{- return (dict
   "id" $id
   "education" $education

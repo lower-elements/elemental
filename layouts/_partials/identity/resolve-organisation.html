@@ -1,0 +1,12 @@
+{{- $position := .position | default "site configuration" -}}
+{{- if not .id -}}
+  {{- errorf "Cannot resolve an organisation with an empty ID. See %s" $position -}}
+{{- end -}}
+{{- $organisation := partial "identity/resolve-id.html" . -}}
+{{- if ne $organisation.kind "organisation" -}}
+  {{- errorf "Identity %q must be an organisation, but resolved to %q. See %s" .id $organisation.kind $position -}}
+{{- end -}}
+{{- if not $organisation.name -}}
+  {{- errorf "Organisation identity %q requires a name. See %s" .id $position -}}
+{{- end -}}
+{{- return $organisation -}}

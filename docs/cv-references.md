@@ -45,7 +45,9 @@ references:
 
 Reference IDs determine selection and order. The referenced identity must be a
 person with a name. An optional organisation_id must resolve to an organisation
-with a name. All other fields are optional. Contact links retain their authored
+with a name through `identity/resolve-organisation.html`. Shared organisations
+can be inherited from the public site module; see [CV organisations](cv-organisations.md).
+All other fields are optional. Contact links retain their authored
 order and labels; without a label, email and telephone links display their URI
 contact value. A person's canonical url appears before the links, without repeating
 that exact URL. Recommendations support Markdown; other fields are plain text.
